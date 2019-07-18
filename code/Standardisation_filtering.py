@@ -188,9 +188,9 @@ for i in df_l['PubChem_CID']:
 
 df_final = pd.concat([df,df_l])
 
-df_final.to_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', sep=',')
+df_final.to_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', sep=',',index=False)
 
 
 #file without ambiguous
 df_nonambi = df_final[df_final['vDILIConcern'] != 'Ambiguous DILI-concern']
-df_nonambi.to_csv(path_or_buf='CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', sep=',')   
+df_nonambi.to_csv(path_or_buf='CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', sep=',',index=False)   
