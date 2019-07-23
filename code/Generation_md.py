@@ -52,7 +52,7 @@ df_d = df_d.astype('float64')
 
 #export descriptors
 df_exp1 = df_d.iloc[:920,:]
-df_exp1.to_csv(path_or_buf='CAMDA-DILI/processed_data/Molecular_Descriptors/mol_descriptors_training_wlabels.csv', sep=',')
+df_exp1.to_csv(path_or_buf='CAMDA-DILI/processed_data/Molecular_Descriptors/mol_descriptors_training.csv', sep=',')
 
 df_exp2 = df_d.iloc[920:,:]
 df_exp2.to_csv(path_or_buf='.CAMDA-DILI/processed_data/Molecular_Descriptors/mol_descriptors_ambiguous.csv', sep=',')
