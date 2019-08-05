@@ -31,7 +31,7 @@ df_ambis = pd.read_csv('CAMDA-DILI/challenge_data/myname_predictions_no1_TEMPLAT
 ambis = df_ambis['Compound.Name'].tolist()
 ambis_indices = []
 for i, row in df_all.iterrows():
-    if row['Compound Name'] in ambis:
+    if row['Compound Name'] in ambis and row['vDILIConcern'] == 'Ambiguous DILI-concern':
         ambis_indices.append(i)
 
 df_ambis = df_all.iloc[ambis_indices,:]
