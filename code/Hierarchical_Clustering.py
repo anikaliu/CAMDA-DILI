@@ -11,7 +11,7 @@ import pandas as pd
 
 from scipy.spatial.distance import squareform
 
-tani = pd.read_csv('../data/tanimoto_similarities.txt', delimiter=',', header=None)
+tani = pd.read_csv('CAMDA-DILI/processed_data/Standardization/tanimoto_similarities.txt', delimiter=',', header=None)
 tani.columns = ['C1', 'C2', 'Tanimoto']
 tani = tani.pivot(index='C1', columns='C2', values='Tanimoto')
 #leave ambiguous out
@@ -68,7 +68,7 @@ for cluster in target_set:
     for compound in dict_dend[cluster]:
         dict_cluster[int(compound)] = cluster
         
-df_compounds = pd.read_csv('Files/Github/data/standardized_compounds_excl_ambiguous.csv', delimiter=',')
+df_compounds = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', delimiter=',')
 clusters = [dict_cluster[i] for i in range(920)]
 df_compounds['cluster'] = clusters
-df_compounds.to_csv('Files/Github/data/standardized_compounds_excl_ambiguous_cluster.csv', sep=',')
+df_compounds.to_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous_cluster.csv', sep=',')
