@@ -20,14 +20,14 @@ def tanimoto(fp1, fp2):
     return(in_both/(in_1 + in_2 - in_both))
 
 #open file with smiles
-df = pd.read_csv('../data/standardized_compounds_incl_ambiguous.csv', delimiter=',')
+df = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', delimiter=',')
 
 #generate list of fps from smiles
 smiles = df['standardized_smiles'].tolist()
 mols = [Chem.MolFromSmiles(smile) for smile in smiles]
 fps_bit = [AllChem.GetMorganFingerprintAsBitVect(mol,2, nBits=2048) for mol in mols]
 
-thefile = open('../data/tanimoto_similarities.txt', 'w')
+thefile = open('CAMDA-DILI/processed_data/Standardization/tanimoto_similarities.txt', 'w')
 #
 count_1 = 1
 for fp in fps_bit:
