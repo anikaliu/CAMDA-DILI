@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Aug  5 10:54:47 2019
-
+#Python 3.6.7
+#pandas: 0.24.2
+#numpy: 1.16.4
+sklearn: 0.21.2
 @author: mw775
 """
 
@@ -33,7 +36,7 @@ state = np.random.get_state()
 
 
 #import dictionariy for mapping from compounds name to unique GEX compound identifier(0-177)
-pkl_file = open('../data/data_paper/GEX/gex_compound_identifier.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/gex_compound_identifier.pkl', 'rb')
 
 compound_ident = pickle.load(pkl_file)
 
@@ -134,13 +137,13 @@ predictions = []
 predictions_ident = []
 
 #import data
-basedir = '../data/data_paper/GEX/data_files'
+basedir = 'CAMDA-DILI/processed_data/Models/GEX/data_files'
 
 files = ["('A375', 6, 10).csv", "('A549', 24, 10).csv", "All_Cell_Lines.csv", "('ASC', 24, 10).csv", "('HA1E', 6, 10).csv", "('HCC515', 6, 10).csv", "('HEPG2', 6, 10).csv",
          "('HT29', 6, 10).csv", "('MCF7', 6, 10).csv", "('PC3', 6, 10).csv", "('PC3', 24, 10).csv", "('PHH', 24, 10).csv", "('SKB', 24, 10).csv", "('VCAP', 6, 10).csv"]
 
  
-basedir2 = '../data/data_paper/GEX/data_files_external'
+basedir2 = 'CAMDA-DILI/processed_data/Models/GEX/data_files_external'
 
 
 files2 = ["External_('A375', 6, 10).csv", "External_('A549', 24, 10).csv", "External_All_Cell_Lines.csv", "External_('ASC', 24, 10).csv", "External_('HA1E', 6, 10).csv",
@@ -148,7 +151,7 @@ files2 = ["External_('A375', 6, 10).csv", "External_('A549', 24, 10).csv", "Exte
          "External_('PC3', 24, 10).csv", "External_('PHH', 24, 10).csv", "External_('SKB', 24, 10).csv", "External_('VCAP', 6, 10).csv"]
 
 #template for ambiguous predictions
-df_pred_temp = pd.read_csv('../data/data_paper/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_pred_temp = pd.read_csv('CAMDA-DILI/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 
 
 #iterate through files of different conditions 
@@ -427,12 +430,12 @@ for file,file_ext in zip(files,files2):
 
         
 #export predictions in zip file
-zf = zipfile.ZipFile('../data/data_paper/GEX/Predictions_GEX.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/processed_data/Models/GEX/Predictions_GEX.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='../data/data_paper/GEX/Predictions_GEX/'+name+'.txt',sep=',',index=False)
-    zf.write('../data/data_paper/GEX/Predictions_GEX/'+name+'.txt')
-    os.remove('../data/data_paper/ECFP/Predictions_GEX/'+name+'.txt')
+    i.to_csv(path_or_buf='CAMDA-DILI/processed_data/Models/GEX/Predictions_GEX/'+name+'.txt',sep=',',index=False)
+    zf.write('CAMDA-DILI/processed_data/Models/GEX/Predictions_GEX/'+name+'.txt')
+    os.remove('CAMDA-DILI/processed_data/Models/ECFP/Predictions_GEX/'+name+'.txt')
 zf.close()
     
 #export test performances
@@ -446,7 +449,7 @@ df_ts['AU_Prec_Rec_Curve'] = aupr_ts
 df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
-df_ts.to_csv('../data/data_paper/GEX/ts_scores_GEX_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/processed_data/Models/GEX/ts_scores_GEX_yscr.csv',sep=',',index=False)
 
 #export cv performances
 df_cv = pd.DataFrame()
@@ -459,29 +462,29 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('../data/data_paper/GEX/cv_scores_GEX_yscr.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/processed_data/Models/GEX/cv_scores_GEX_yscr.csv',sep=',',index=False)
 
 #export best params
-output = open('../data/data_paper/GEX/best_params_GEX_yscr.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/GEX/best_params_GEX_yscr.pkl','wb')
 
 pickle.dump(best_params, output)
 
 output.close()
 
 #export splits
-output = open('../data/data_paper/GEX/train_list_all.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/GEX/train_list_all.pkl','wb')
 pickle.dump(train_list_all, output)
 output.close()
 
-output = open('../data/data_paper/GEX/test_list_all.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/GEX/test_list_all.pkl','wb')
 pickle.dump(test_list_all, output)
 output.close()
 
-output = open('../data/data_paper/GEX/train_list_mcnc.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/GEX/train_list_mcnc.pkl','wb')
 pickle.dump(train_list_mcnc, output)
 output.close()
 
-output = open('../data/data_paper/GEX/test_list_mcnc.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/GEX/test_list_mcnc.pkl','wb')
 pickle.dump(test_list_mcnc, output)
 output.close()
 
