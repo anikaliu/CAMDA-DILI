@@ -25,13 +25,13 @@ import os
 import zipfile
 
 #import data
-df = pd.read_csv('../data/data_paper/PT/training_set_predicted_targets.txt', delimiter='\t')
+df = pd.read_csv('CAMDA-DILI/processed_data/Models/PT/training_set_predicted_targets.txt', delimiter='\t')
 df = df.T
 df = df.iloc[16:,:]
 df.reset_index(inplace=True,drop=True)
 df = df.iloc[:659,:]
 
-df_compounds = pd.read_csv('../data/data_paper/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',',index_col=0)
+df_compounds = pd.read_csv('CAMDA-DILI/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',',index_col=0)
 df_compounds = df_compounds.iloc[:661,:]
 
 #remove compounds not accepted by Pidgin from df compounds and reset index
@@ -45,28 +45,28 @@ df['cluster'] = df_compounds_red['cluster']
 
 #get mappings
 #import dictionaries for cluster and compounds
-pkl_file = open('../data/data_paper/GEX/gex_compound_identifier.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/gex_compound_identifier.pkl', 'rb')
 compound_ident = pickle.load(pkl_file)
 pkl_file.close() 
 
 
-pkl_file = open('../data/data_paper/GEX/gex_compound_cluster.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/gex_compound_cluster.pkl', 'rb')
 compound_cluster = pickle.load(pkl_file)
 pkl_file.close() 
 
-pkl_file = open('../data/data_paper/GEX/test_list_mcnc.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/test_list_mcnc.pkl', 'rb')
 test_list_mcnc = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('../data/data_paper/GEX/train_list_mcnc.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/train_list_mcnc.pkl', 'rb')
 train_list_mcnc = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('../data/data_paper/GEX/test_list_all.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/test_list_all.pkl', 'rb')
 test_list_all = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('../data/data_paper/GEX/train_list_all.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/processed_data/Models/GEX/train_list_all.pkl', 'rb')
 train_list_all = pickle.load(pkl_file)
 pkl_file.close()
 
@@ -159,11 +159,11 @@ cluster_mcnc = np.concatenate((cluster[mc],cluster[nc]))
 
 
 #data for ambis
-df_ambis = pd.read_csv('../data/data_paper/PT/ambiguous_predicted_targets.txt', delimiter='\t')
+df_ambis = pd.read_csv('CAMDA-DILI/processed_data/Models/PT/ambiguous_predicted_targets.txt', delimiter='\t')
 df_ambis = df_ambis.T
 X_ambis = df_ambis.iloc[16:,:].to_numpy()
 
-df_pred = pd.read_csv('../data/data_paper/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_pred = pd.read_csv('CAMDA-DILI/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 ambis = df_pred['Compound.Name'].tolist()
 
 # grid_search funtions
@@ -351,12 +351,12 @@ for dataset in range(2):
                 predictions_ident.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
         
 #export predictions in zip file
-zf = zipfile.ZipFile('../data/data_paper/PT_red/Predictions_PT_red.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/processed_data/Models/PT_red/Predictions_PT_red.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='../data/data_paper/PT_red/Predictions_PT_red/'+name+'.txt',sep=',',index=False)
-    zf.write('../data/data_paper/PT_red/Predictions_PT_red/'+name+'.txt')
-    os.remove('../data/data_paper/PT_red/Predictions_PT_red/'+name+'.txt')
+    i.to_csv(path_or_buf='CAMDA-DILI/processed_data/Models/PT_red/Predictions_PT_red/'+name+'.txt',sep=',',index=False)
+    zf.write('CAMDA-DILI/processed_data/Models/PT_red/Predictions_PT_red/'+name+'.txt')
+    os.remove('CAMDA-DILI/processed_data/Models/PT_red/Predictions_PT_red/'+name+'.txt')
 zf.close()
     
 df_ts = pd.DataFrame()
@@ -370,7 +370,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('../data/data_paper/PT_red/ts_scores_PT_red_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/processed_data/Models/PT_red/ts_scores_PT_red_yscr.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -382,10 +382,10 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('../data/data_paper/PT_red/cv_scores_PT_red_yscr.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/processed_data/Models/PT_red/cv_scores_PT_red_yscr.csv',sep=',',index=False)
 
 #export best params
-output = open('../data/data_paper/PT_red/best_params_PT_red_yscr.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/PT_red/best_params_PT_red_yscr.pkl','wb')
 
 pickle.dump(best_params, output)
 
