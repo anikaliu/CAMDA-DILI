@@ -14,8 +14,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 #import data table
-df = pd.read_csv('Files/no_ambi_compounds.csv', delimiter=',')
-df = df.drop('Unnamed: 0', axis=1)
+df = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', delimiter=',')
+
 
 #generate FPs
 smis = df['standardized_smiles'].tolist()
@@ -41,7 +41,7 @@ Y = np.squeeze(Y)
 Y= np.concatenate((Y[:174],Y[434:661]))
 
 #import similarities
-tani = pd.read_csv('Files/Tanimoto/190606results_tanimoto.txt', delimiter=',', header=None)
+tani = pd.read_csv('CAMDA-DILI/processed_data/Standardization/tanimoto_similarities.txt, delimiter=',', header=None)
 tani.columns = ['C1', 'C2', 'Tanimoto']
 tani = tani.pivot(index='C1', columns='C2', values='Tanimoto')
 
@@ -137,4 +137,4 @@ df_results['predicted_label'] = pr_label
 df_results['correct'] = correct
 df_results['probability'] = probability
 
-df_results.to_csv(path_or_buf='Files/result_loocv_mcnc.txt',sep=',')
+df_results.to_csv(path_or_buf='CAMDA-DILI/processed_data/LOOCV/result_loocv_mcnc.txt',sep=',')
