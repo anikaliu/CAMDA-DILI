@@ -1,2 +1,2 @@
-Parse_Ambiguous_Results.ipynb parses all the .txt contingency tables
-and outputs a .csv results file for each descriptor in its respective folder
+DO NOT USE! (Please remove this directory)
+Use the processed_data -> Ambiguous_predictions directory
