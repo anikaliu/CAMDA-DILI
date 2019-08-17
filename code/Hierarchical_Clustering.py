@@ -20,7 +20,7 @@ tani = tani.iloc[:920,:920]
 #convert similarity matrix in distance matrix
 dist_matrix = 1 - tani
 
-#convert a matrix in condensed 1d vector
+#convert matrix in condensed 1d vector
 v = squareform(dist_matrix)
 
 #generate the linkage matrix
