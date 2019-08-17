@@ -27,7 +27,7 @@ import pickle
 import os
 import zipfile
 
-#import data
+#import the data
 df_compounds = pd.read_csv('CAMDA-DILI/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
 
