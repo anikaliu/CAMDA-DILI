@@ -13,7 +13,7 @@ Purpose: Generating DILIrank(-vLessConcern) dataset for both SARpy and MoSS SA g
 
 (Bi) 
 Script: 
-Purpose: Generating MoSSpy SAs
+Purpose: Generating MoSSpy SAs (moss_results.csv is outputted)
 
 (Bii) 
 Script: DILI_SUBSTRUCTURES_USE_ALL.ipynb
