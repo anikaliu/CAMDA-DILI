@@ -12,18 +12,22 @@ Script: Prepare_DILI_Dataset_for_SARpy_and_MoSS.ipynb
 Purpose: Generating DILIrank(-vLessConcern) dataset for both SARpy and MoSS SA generation
 
 (Bi) 
-Script: 
-Purpose: Generating MoSSpy SAs (moss_results.csv is outputted)
+Script: Prepare_for_moss.ipynb
+Purpose: Generating .csv file for  MoSS KNIME workflow (moss_input.csv is outputted)
 
-(Bii) 
+(Bii)
+Script: KNIME workflow in 'KNIME_project MoSS substructures_final.zip'. Input 'moss_input.csv' via copying data manually into table creator node
+Purpose: Generating MoSS SAs (moss_results.csv is outputted)
+
+(C) 
 Script: DILI_SUBSTRUCTURES_USE_ALL.ipynb
-Purpose: Generating SARpy SAs, then concatenating with MoSS and literature (Liu et al. (2015)) to generate SA metrics e.g. precision and % coverage in DILI compounds
-
-(C)
-Script: DrugBank_Approved_Analysis.ipynb
-Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4).
+Purpose: Generating SARpy SAs, then concatenating with MoSS and literature (Liu et al. (2015)) to generate SA metrics e.g. precision and % coverage in DILI compounds (Structural_alerts.csv is outputted)
 
 (D)
+Script: DrugBank_Approved_Analysis.ipynb
+Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4) (Structural_alerts_with_DrugBank.csv is outputted)
+
+(E)
 Script: Combined_Plot.R
 Purpose: Generate Figure 5
 
