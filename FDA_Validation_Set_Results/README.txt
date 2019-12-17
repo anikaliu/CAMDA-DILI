@@ -10,6 +10,6 @@ Purpose: Converts confusion matrices to tabulated .csv file with model metrics (
 
 (3)
 Script: Parse_Ambiguous_Results.ipynb
-Purpose: Calculates mean+-std values for each model type for the FDA validation set. This is used to generate 
+Purpose: Calculates mean+-std values for each model type for the FDA validation set for RF and SVM seperately. Such tables were     used to produce the 'FDA' rows in Table S1 of the manuscript
 
 
