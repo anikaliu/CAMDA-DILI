@@ -9,7 +9,7 @@ File order - base file is "compounds_added_inactives.csv":
 
 (A) 
 Script: Prepare_DILI_Dataset_for_SARpy_and_MoSS.ipynb
-Purpose: Generating DILIrank(-vLessConcern) dataset
+Purpose: Generating DILIrank(-vLessConcern) dataset for both SARpy and MoSS SA generation
 
 (Bi) 
 Script: 
@@ -21,5 +21,9 @@ Purpose: Generating SARpy SAs, then concatenating with MoSS and literature (Liu 
 
 (C)
 Script: DrugBank_Approved_Analysis.ipynb
-Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script)
+Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4).
+
+(D)
+Script: Combined_Plot.R
+Purpose: Generate Figure 5
 
