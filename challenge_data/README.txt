@@ -10,6 +10,7 @@ The script CAMDA-DILI/code/SIDER_get_inactives_liver.py gets compounds from SIDE
 The script CAMDA-DILI/code/Standardisation_filtering.py combines the challenge dataset with the compounds from SIDER
 and standardises them
 
-  Inputs: 'CAMDA-DILI/processed_data/SIDER/sider_inactives_unfiltered.csv', 'CAMDA-DILI/challenge_data/DILIrank_1.csv', '1136compounds.csv'
+  Inputs: 'CAMDA-DILI/processed_data/SIDER/sider_inactives_unfiltered.csv', 'CAMDA-DILI/challenge_data/DILIrank_1.csv',      
+          '1136compounds.csv'
   Outputs: 'CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv',
            'CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv'
