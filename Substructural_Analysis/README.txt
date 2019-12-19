@@ -8,7 +8,7 @@ Additionally to replicate the SARpy implementation the following files need to b
 SARpy.py, SARpy.pyc, SARpytools.py, SARpytools.pyc
 
 (2)
-File order - base file is "standardized_compounds_incl_ambiguous.csv" (in CAMDA-DILI/processed_data/Standardization):
+File order - base file is "standardized_compounds_incl_ambiguous.csv" (in CAMDA-DILI/processed_data/Standardization). Additionally the file "DrugBank_5_1_4_approved.csv" is required for step (D):
 
 (A) 
 Script: Prepare_DILI_Dataset_for_SARpy_and_MoSS.ipynb
