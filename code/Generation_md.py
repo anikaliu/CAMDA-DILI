@@ -12,7 +12,7 @@ import numpy as np
 from rdkit import Chem
 from mordred import Calculator, descriptors
 
-df = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', delimiter=',', index_col=0)
+df = pd.read_csv('CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', delimiter=',', index_col=0)
 
 
 smis = df['standardized_smiles'].tolist()
@@ -24,10 +24,10 @@ calc = Calculator(descriptors, ignore_3D=True)
 df_descr = calc.pandas(mols)
 
 
-df_all = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', delimiter=',')
+df_all = pd.read_csv('CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', delimiter=',')
 
 
-df_ambis = pd.read_csv('CAMDA-DILI/challenge_data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_ambis = pd.read_csv('CAMDA-DILI/data/challenge_data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 ambis = df_ambis['Compound.Name'].tolist()
 ambis_indices = []
 for i, row in df_all.iterrows():
@@ -52,7 +52,7 @@ df_d = df_d.astype('float64')
 
 #export descriptors
 df_exp1 = df_d.iloc[:920,:]
-df_exp1.to_csv(path_or_buf='CAMDA-DILI/processed_data/Molecular_Descriptors/mol_descriptors_training.csv', sep=',')
+df_exp1.to_csv(path_or_buf='CAMDA-DILI/data/processed_data/Molecular_Descriptors/mol_descriptors_training.csv', sep=',')
 
 df_exp2 = df_d.iloc[920:,:]
-df_exp2.to_csv(path_or_buf='.CAMDA-DILI/processed_data/Molecular_Descriptors/mol_descriptors_ambiguous.csv', sep=',')
+df_exp2.to_csv(path_or_buf='CAMDA-DILI/data/processed_data/Molecular_Descriptors/mol_descriptors_ambiguous.csv', sep=',')
