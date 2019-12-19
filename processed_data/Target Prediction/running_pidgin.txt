@@ -1,9 +1,0 @@
-The following files were used as Imput for Pidgin:
-
-'CAMDA-DILI/processed_data/Target Prediction/training_set_pidgin.smi'
-'CAMDA-DILI/processed_data/Target Prediction/ambiguous_pidgin.smi'
-
-Pidgin was run using the following command:
-
-python /scratch/software/PIDGINv3/predict.py -f <filename> -b 10 --ad 0 -n 1 --organism 'Homo sapiens'
-
