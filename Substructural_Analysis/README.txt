@@ -4,6 +4,9 @@ https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environme
 
 Specifically run "conda create --name myenv --file CAMDA_SAs_conda_env_spec.txt".
 
+Additionally to replicate the SARpy implementation the following files need to be downloaded:
+SARpy.py, SARpy.pyc, SARpytools.py, SARpytools.pyc
+
 (2)
 File order - base file is "standardized_compounds_incl_ambiguous.csv" (in CAMDA-DILI/processed_data/Standardization):
 
