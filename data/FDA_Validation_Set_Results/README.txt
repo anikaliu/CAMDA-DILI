@@ -12,7 +12,7 @@ Purpose: Converts confusion matrices to tabulated .csv file with model metrics (
 
 (i) "model"; this is currently encoded as "val." (redundant) + "dataset_" (all - DILIrank + SIDER, MCNC - DILIrank (-vLessConcern)),  + "algorithm_" (ML algorithm used) + "1_" (redundant) + "train_test_split" (i.e. over the outer loop of 10 different train-test splits)
 
-Unsure why MCLCNC is not present at the moment ...
+There is no MCLCNC as this model type was not sent to CAMDA for evaluation
 
 (ii) all other columns are the metrics of each model when tested on the FDA validation set
 
