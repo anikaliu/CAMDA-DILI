@@ -6,7 +6,15 @@ Specifically run "conda create --name myenv --file CAMDA_Metrics_conda_env_spec.
 
 (2)
 Script: Result_Parsing.ipynb
-Purpose: Converts confusion matrices to tabulated .csv file with model metrics (all models within nested CV loop). Outputs an "ambiguous_results.csv" per model type e.g. ECFP4, ECFP4_red
+Purpose: Converts confusion matrices to tabulated .csv file with model metrics (all models within nested CV loop). Outputs an "ambiguous_results.csv" per model type e.g. inside each of the model folders: ECFP4, ECFP4_red etc.
+
+--- ambiguous_results.csv file description per column ---
+
+(i) "model"; this is currently encoded as "val." (redundant) + "dataset_" (all - DILIrank + SIDER, MCNC - DILIrank (-vLessConcern)),  + "algorithm_" (ML algorithm used) + "1_" (redundant) + "train_test_split" (i.e. over the outer loop of 10 different train-test splits)
+
+Unsure why MCLCNC is not present at the moment ...
+
+(ii) all other columns are the metrics of each model when tested on the FDA validation set
 
 (3)
 Script: Parse_Ambiguous_Results.ipynb
