@@ -1,4 +1,4 @@
-This files describes the training of the ML models and the prediction of the challenge compounds.
+This files describes the training of the ML models and the prediction of the challenge compounds. Also the 5NN analysis is described
 
 The scripts yscramb_testset_gridsearch_ECFP.py, yscramb_testset_gridsearch_MD.py, yscramb_testset_gridsearch_PT.py
 contain the training procedure using  as features ECFP, molecular descriptors and predicted protein targets respectively.
@@ -56,3 +56,13 @@ Output PT:
 -'CAMDA-DILI/data/processed_data/Models/PT/best_params_PT_yscr.pkl'
 -'CAMDA-DILI/data/processed_data/Models/PT/svm_feature_coefficients.csv'
 -'CAMDA-DILI/processed_data/Models/PT/rf_feature_importance.csv'
+
+
+The script  CAMDA-DILI/code/LOOCV_SVM_MCNC.py takes the compounds file 
+('CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv') as input and creates the file 
+CAMDA-DILI/data/processed_data/LOOCV/result_loocv_svm_processed.csv which contains the results of the LOOCV experiment.
+
+The script  CAMDA-DILI/code/ML_training/generate_plots_loocv.py takkes as input the results of the LOOCV experiment
+(CAMDA-DILI/data/processed_data/LOOCV/result_loocv_svm_processed.csv) and the Tanimoto similarities
+(CAMDA-DILI/data/processed_data/Standardization/tanimoto_similarities.txt) to generate the plots 2a 
+(CAMDA-DILI/data/processed_data/Plots/Training_Data_AD.svg) and 2b (CAMDA-DILI/dataprocessed_data/Plots/Training_vs_validation_AD.svg) 
