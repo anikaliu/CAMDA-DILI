@@ -26,9 +26,9 @@ import os
 import zipfile
 
 #import data
-df_compounds = pd.read_csv('CAMDA-DILI/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
+df_compounds = pd.read_csv('CAMDA-DILI/data/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
-df = pd.read_csv('CAMDA-DILI/processed_data/Models/PT/training_set_predicted_targets.txt', delimiter='\t')
+df = pd.read_csv('CAMDA-DILI/data/processed_data/Models/PT/training_set_predicted_targets.txt', delimiter='\t')
 df = df.T
 X_all = df.iloc[16:,:].to_numpy()
 
@@ -72,10 +72,10 @@ cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 
 
 
-df_pred = pd.read_csv('CAMDA-DILI/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_pred = pd.read_csv('CAMDA-DILI/data/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 
 #data for ambis
-df_ambis = pd.read_csv('CAMDA-DILI/processed_data/Models/PT/ambiguous_predicted_targets.txt', delimiter='\t')
+df_ambis = pd.read_csv('CAMDA-DILI/data/processed_data/Models/PT/ambiguous_predicted_targets.txt', delimiter='\t')
 df_ambis = df_ambis.T
 X_ambis = df_ambis.iloc[16:,:].to_numpy()
 
@@ -140,27 +140,27 @@ np.random.seed(55)
 state = np.random.get_state()
 
 #import skf splits
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/all_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_tr.pkl', 'rb')
 all_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/all_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_te.pkl', 'rb')
 all_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/mclcnc_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_tr.pkl', 'rb')
 mclcnc_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/mclcnc_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_te.pkl', 'rb')
 mclcnc_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/mcnc_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_tr.pkl', 'rb')
 mcnc_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/processed_data/Models/ECFP/splits/mcnc_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_te.pkl', 'rb')
 mcnc_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
