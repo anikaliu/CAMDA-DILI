@@ -354,12 +354,12 @@ for dataset in range(3):
                 
                 
 #export predictions in zip file
-zf = zipfile.ZipFile('../data/data_paper/PT/Predictions_PT.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='CAMDA-DILI/processed_data/Models/PT/Predictions_PT/'+name+'.txt',sep=',',index=False)
-    zf.write('CAMDA-DILI/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
-    os.remove('CAMDA-DILI/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
+    i.to_csv(path_or_buf='CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt',sep=',',index=False)
+    zf.write('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
+    os.remove('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
 zf.close()
     
 #export feature_importances
@@ -371,7 +371,7 @@ df_feat_rf.to_csv('CAMDA-DILI/processed_data/Models/PT/rf_feature_importance.csv
 df_feat_svm = pd.DataFrame()
 for feat,ident in zip(features_svm,features_ident):
     df_feat_svm[ident] = feat
-df_feat_svm.to_csv('CAMDA-DILI/processed_data/Models/PT/svm_feature_coefficients.csv',sep=',',index=False)
+df_feat_svm.to_csv('CAMDA-DILI/data/processed_data/Models/PT/svm_feature_coefficients.csv',sep=',',index=False)
    
 
 df_ts = pd.DataFrame()
@@ -385,7 +385,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('CAMDA-DILI/processed_data/Models/PT/ts_scores_PT_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/PT/ts_scores_PT_yscr.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -397,10 +397,10 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('CAMDA-DILI/processed_data/Models/PT/cv_scores_PT_yscr.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT_yscr.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/processed_data/Models/PT/best_params_PT_yscr.pkl','wb')
+output = open('CAMDA-DILI/data/processed_data/Models/PT/best_params_PT_yscr.pkl','wb')
 
 pickle.dump(best_params, output)
 
