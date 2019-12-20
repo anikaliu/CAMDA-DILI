@@ -305,7 +305,7 @@ df_ts['AU_Prec_Rec_Curve'] = aupr_ts
 df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
-df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/MD/ts_scores_FP_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/MD/ts_scores_MD_yscr.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
