@@ -7,4 +7,5 @@ Purpose: To parse ECFP4, MD, PT (+ reduced models) performance metrics and outpu
          
 (2)
 
-ML model performances for CV and ET for each model type (ECFP, MD, and PT) are currently in the directory ./processed_data/Models/{model_type}" labelled as "cv_scores_FP_yscr.csv" and "ts_scores_FP_yscr.csv"
+Data: ML model performances for CV and ET for each model type (ECFP, MD, and PT) 
+Description: currently in the directory ./processed_data/Models/{model_type}" labelled as "cv_scores_FP_yscr.csv" and "ts_scores_FP_yscr.csv"
