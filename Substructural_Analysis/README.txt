@@ -15,7 +15,7 @@ Script: Prepare_DILI_Dataset_for_SARpy_and_MoSS.ipynb
 Purpose: (i) Generating DILIrank(-vLessConcern) dataset for SARpy (Most_No_DILIConcern_Dataset_for_SAs.csv is outputted) (ii) Further procecessing to generate .csv file for  MoSS KNIME workflow (moss_input.csv is outputted)
 
 (B)
-Script: KNIME workflow in 'KNIME_project MoSS substructures_final.zip'. Input 'moss_input.csv' via copying data manually into table creator node
+Script: KNIME workflow in 'KNIME_project MoSS substructures_final.knwf'. Input 'moss_input.csv' via copying data manually into table creator node
 Purpose: Generating MoSS SAs (moss_results.csv is outputted)
 
 (C) 
