@@ -2,3 +2,6 @@ previous name - new name
 
 Models (directory) - Model_Results_Parameters (directory)
 LOOCV (directory) - LOOCV_Results (directory)
+yscramb_testset_gridsearch_ECFP.py - models_ECFP.py
+yscramb_testset_gridsearch_MD.py - models_MD.py
+yscramb_testset_gridsearch_PT.py - models_PT.py
