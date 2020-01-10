@@ -53,7 +53,7 @@ def standard(mol):
         
         
 #import DILI rank data
-df = pd.read_csv('CAMDA-DILI/challenge_data/DILIrank_1.csv', delimiter=',')
+df = pd.read_csv('CAMDA-DILI/Data_Processing/challenge_data/DILIrank_1.csv', delimiter=',')
 df = df.drop(df[df.SMILES == '.'].index)
 df = df.drop(df[df.SMILES == '0'].index)
 smiles1 = df['SMILES'].tolist()
@@ -87,7 +87,7 @@ df['standardized_smiles'] = output_smis
 #standardization and filtering for DILI rank complete!
 
 #sider inactives
-df2 = pd.read_csv('CAMDA-DILI/processed_data/SIDER/sider_inactives_unfiltered.csv', delimiter=',')
+df2 = pd.read_csv('CAMDA-DILI/Data_Processing/SIDER_Retrieval/data/sider_inactives_unfiltered.csv', delimiter=',')
 df2 = df2.drop('Unnamed: 0', axis=1)
 
 df2['MW'] = [Descriptors.ExactMolWt(Chem.MolFromSmiles(smi)) for smi in df2['smiles'].tolist()]
@@ -159,7 +159,7 @@ df_l['standardized_smiles'] = output_smis
 
 
 
-df_target = pd.read_csv('CAMDA-DILI/processed_data/Standardization/1136compounds.csv', delimiter=',', index_col=0)
+df_target = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/Standardization/filtered_compounds.csv', delimiter=',', index_col=0)
 target_pc = set(df_target['PubChem_CID'].tolist())
 missing_pc = target_pc
 
@@ -188,9 +188,9 @@ for i in df_l['PubChem_CID']:
 
 df_final = pd.concat([df,df_l])
 
-df_final.to_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', sep=',',index=False)
+df_final.to_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_incl_ambiguous.csv', sep=',',index=False)
 
 
 #file without ambiguous
 df_nonambi = df_final[df_final['vDILIConcern'] != 'Ambiguous DILI-concern']
-df_nonambi.to_csv(path_or_buf='CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', sep=',',index=False)   
+df_nonambi.to_csv(path_or_buf='CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous.csv', sep=',',index=False)   
