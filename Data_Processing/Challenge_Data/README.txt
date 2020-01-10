@@ -12,7 +12,7 @@ The script CAMDA-DILI/code/Standardisation_filtering.py combines the challenge d
 and standardises them
 
   Inputs: 'CAMDA-DILI/data/processed_data/SIDER/sider_inactives_unfiltered.csv', 'CAMDA-DILI/data/challenge_data
-  /DILIrank_1.csv', '1136compounds.csv'
+  /DILIrank_1.csv', 'filtered_compounds.csv'
   Outputs: 'CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv',
            'CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv'
            
