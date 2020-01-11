@@ -1,6 +1,6 @@
 This files describes the training of the ML models and the prediction of the challenge compounds. Also the 5NN analysis is described
 
-The scripts yscramb_testset_gridsearch_ECFP.py, yscramb_testset_gridsearch_MD.py, yscramb_testset_gridsearch_PT.py
+The scripts models_ECFP.py, models_gridsearch_MD.py, models_PT.py
 contain the training procedure using  as features ECFP, molecular descriptors and predicted protein targets respectively.
 The steps are:
 -iteration through datasets (DILIrank+SIDER, DILIrank, MCNC)
@@ -39,26 +39,26 @@ Output ECFP:
 -'CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_tr.pkl'
 -'CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_te.pkl'
 -'CAMDA-DILI/data/processed_data/Models/ECFP/Predictions_ECFP.zip'
--'CAMDA-DILI/data/processed_data/Models/ECFP/ts_scores_FP_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/ECFP/cv_scores_FP_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/ECFP/best_params_FP_yscr.pkl'
+-'CAMDA-DILI/data/processed_data/Models/ECFP/test_scores_ECFP.csv'
+-'CAMDA-DILI/data/processed_data/Models/ECFP/cv_scores_ECFP.csv'
+-'CAMDA-DILI/data/processed_data/Models/ECFP/best_parameters_ECFP.pkl'
 
 Output MD:
 -'CAMDA-DILI/data/processed_data/Models/MD/Predictions_MD.zip'
--'CAMDA-DILI/data/processed_data/Models/MD/ts_scores_MD_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/MD/cv_scores_MD_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/MD/best_params_yscr_MD.pkl'
+-'CAMDA-DILI/data/processed_data/Models/MD/test_scores_MD.csv'
+-'CAMDA-DILI/data/processed_data/Models/MD/cv_scores_MD.csv'
+-'CAMDA-DILI/data/processed_data/Models/MD/best_parameters_MD.pkl'
 
 Output PT:
 -'CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT.zip'
--'CAMDA-DILI/data/processed_data/Models/PT/ts_scores_PT_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT_yscr.csv'
--'CAMDA-DILI/data/processed_data/Models/PT/best_params_PT_yscr.pkl'
+-'CAMDA-DILI/data/processed_data/Models/PT/test_scores_PT.csv'
+-'CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT.csv'
+-'CAMDA-DILI/data/processed_data/Models/PT/best_parameters_PT.pkl'
 -'CAMDA-DILI/data/processed_data/Models/PT/svm_feature_coefficients.csv'
 -'CAMDA-DILI/processed_data/Models/PT/rf_feature_importance.csv'
 
 
-The script  CAMDA-DILI/code/LOOCV_SVM_MCNC.py takes the compounds file 
+The script  CAMDA-DILI/code/loocv_best_model.py takes the compounds file 
 ('CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv') as input and creates the file 
 CAMDA-DILI/data/processed_data/LOOCV/result_loocv_svm_processed.csv which contains the results of the LOOCV experiment.
 
