@@ -28,7 +28,7 @@ import os
 import zipfile
 
 #import the data
-df_compounds = pd.read_csv('CAMDA-DILI/data/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
+df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
 
 #generate FPs
@@ -74,10 +74,10 @@ Y_mclcnc = np.concatenate((Y_all[mc],Y_all[lc],Y_all[nc]))
 cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 
 #data for ambiguous, fp
-df_inclambi = pd.read_csv('CAMDA-DILI/data/processed_data/Models/ECFP/standardized_compounds_incl_ambiguous.csv', delimiter=',')
+df_inclambi = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data//standardized_compounds_incl_ambiguous.csv', delimiter=',')
 
 
-df_pred = pd.read_csv('CAMDA-DILI/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_pred = pd.read_csv('CAMDA-DILI/Data_Processing/Challenge_Data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 ambis = df_pred['Compound.Name'].tolist()
 ambis_indices = []
 for i, row in df_inclambi.iterrows():
@@ -325,12 +325,12 @@ for dataset in range(3):
                 predictions_ident.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
         
 #export predictions in zip file
-zf = zipfile.ZipFile('CAMDA-DILI/data/processed_data/Models/ECFP/Predictions_ECFP.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='CAMDA-DILI/data/processed_data/Models/ECFP/Predictions_ECFP/'+name+'.txt',sep=',',index=False)
-    zf.write('CAMDA-DILI/data/processed_data/Models/ECFP/Predictions_ECFP/'+name+'.txt')
-    os.remove('CAMDA-DILI/data/processed_data/Models/ECFP/Predictions_ECFP/'+name+'.txt')
+    i.to_csv(path_or_buf='CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt',sep=',',index=False)
+    zf.write('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt')
+    os.remove('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt')
 zf.close()
     
 df_ts = pd.DataFrame()
@@ -344,7 +344,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/ECFP/test_scores_ECFP.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/test_scores_ECFP.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -356,61 +356,61 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('CAMDA-DILI/data/processed_data/Models/ECFP/cv_scores_ECFP.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/cv_scores_ECFP.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/best_parameters_ECFP.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/best_parameters_ECFP.pkl','wb')
 
 pickle.dump(best_params, output)
 
 output.close()
 
 #export splits
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_tr.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_tr.pkl','wb')
 pickle.dump(all_ttsplits_tr, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_tr.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_ttsplits_tr.pkl','wb')
 pickle.dump(mclcnc_ttsplits_tr, output)
 output.close()
 
-output = open'CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_tr','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mcnc_ttsplits_tr','wb')
 pickle.dump(mcnc_ttsplits_tr, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_cvsplits_tr.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_cvsplits_tr.pkl','wb')
 pickle.dump(all_cvsplits_tr, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_cvsplits_tr.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_cvsplits_tr.pkl','wb')
 pickle.dump(mclcnc_cvsplits_tr, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_cvsplits_tr.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mcnc_cvsplits_tr.pkl','wb')
 pickle.dump(mcnc_cvsplits_tr, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_te.pkl','wb')
 pickle.dump(all_ttsplits_te, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_ttsplits_te.pkl','wb')
 pickle.dump(mclcnc_ttsplits_te, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/mcnc_ttsplits_te.pkl','wb')
 pickle.dump(mcnc_ttsplits_te, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_cvsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_cvsplits_te.pkl','wb')
 pickle.dump(all_cvsplits_te, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_cvsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_cvsplits_te.pkl','wb')
 pickle.dump(mclcnc_cvsplits_te, output)
 output.close()
 
-output = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_cvsplits_te.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mcnc_cvsplits_te.pkl','wb')
 pickle.dump(mcnc_cvsplits_te, output)
 output.close()
 
