@@ -385,7 +385,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/PT/ts_scores_PT_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/PT/test_scores_PT.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -397,10 +397,10 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT_yscr.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/data/processed_data/Models/PT/best_params_PT_yscr.pkl','wb')
+output = open('CAMDA-DILI/data/processed_data/Models/PT/best_parameters_PT.pkl','wb')
 
 pickle.dump(best_params, output)
 
