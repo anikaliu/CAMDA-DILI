@@ -26,9 +26,9 @@ import os
 import zipfile
 
 #import data
-df_compounds = pd.read_csv('CAMDA-DILI/data/processed_data/Models/ECFP/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
+df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
-df = pd.read_csv('CAMDA-DILI/data/processed_data/Models/PT/training_set_predicted_targets.txt', delimiter='\t')
+df = pd.read_csv('CAMDA-DILI/Data_Processing/Target_Prediction/data/training_set_predicted_targets.txt', delimiter='\t')
 df = df.T
 X_all = df.iloc[16:,:].to_numpy()
 
@@ -72,10 +72,10 @@ cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 
 
 
-df_pred = pd.read_csv('CAMDA-DILI/data/processed_data/Models/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
+df_pred = pd.read_csv('CAMDA-DILI/Data_Processing/Challenge_Data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 
 #data for ambis
-df_ambis = pd.read_csv('CAMDA-DILI/data/processed_data/Models/PT/ambiguous_predicted_targets.txt', delimiter='\t')
+df_ambis = pd.read_csv('CAMDA-DILI/Data_Processing/Target_Prediction/data/ambiguous_predicted_targets.txt', delimiter='\t')
 df_ambis = df_ambis.T
 X_ambis = df_ambis.iloc[16:,:].to_numpy()
 
@@ -140,27 +140,27 @@ np.random.seed(55)
 state = np.random.get_state()
 
 #import skf splits
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_tr.pkl', 'rb')
 all_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/all_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_te.pkl', 'rb')
 all_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_ttsplits_tr.pkl', 'rb')
 mclcnc_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mclcnc_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_ttsplits_te.pkl', 'rb')
 mclcnc_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_tr.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mcnc_ttsplits_tr.pkl', 'rb')
 mcnc_ttsplits_tr = pickle.load(pkl_file)
 pkl_file.close()
 
-pkl_file = open('CAMDA-DILI/data/processed_data/Models/ECFP/splits/mcnc_ttsplits_te.pkl', 'rb')
+pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mcnc_ttsplits_te.pkl', 'rb')
 mcnc_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
@@ -354,24 +354,24 @@ for dataset in range(3):
                 
                 
 #export predictions in zip file
-zf = zipfile.ZipFile('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt',sep=',',index=False)
-    zf.write('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
-    os.remove('CAMDA-DILI/data/processed_data/Models/PT/Predictions_PT/'+name+'.txt')
+    i.to_csv(path_or_buf='CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT/'+name+'.txt',sep=',',index=False)
+    zf.write('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT/'+name+'.txt')
+    os.remove('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT/'+name+'.txt')
 zf.close()
     
 #export feature_importances
 df_feat_rf = pd.DataFrame()
 for feat,ident in zip(features_rf,features_ident):
     df_feat_rf[ident] = feat
-df_feat_rf.to_csv('CAMDA-DILI/processed_data/Models/PT/rf_feature_importance.csv',sep=',',index=False)
+df_feat_rf.to_csv('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/rf_feature_importance.csv',sep=',',index=False)
 
 df_feat_svm = pd.DataFrame()
 for feat,ident in zip(features_svm,features_ident):
     df_feat_svm[ident] = feat
-df_feat_svm.to_csv('CAMDA-DILI/data/processed_data/Models/PT/svm_feature_coefficients.csv',sep=',',index=False)
+df_feat_svm.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/svm_feature_coefficients.csv',sep=',',index=False)
    
 
 df_ts = pd.DataFrame()
@@ -385,7 +385,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('CAMDA-DILI/data/processed_data/Models/PT/test_scores_PT.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/test_scores_PT.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -397,10 +397,10 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('CAMDA-DILI/data/processed_data/Models/PT/cv_scores_PT.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/cv_scores_PT.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/data/processed_data/Models/PT/best_parameters_PT.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/best_parameters_PT.pkl','wb')
 
 pickle.dump(best_params, output)
 
