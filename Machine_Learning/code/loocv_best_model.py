@@ -11,7 +11,7 @@ from rdkit.Chem import AllChem as Chem
 from sklearn.svm import SVC
 
 #import data table
-df = pd.read_csv('CAMDA-DILI/processed_data/Standardization/standardized_compounds_excl_ambiguous.csv', delimiter=',')
+df = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous.csv', delimiter=',')
 
 #generate FPs
 smis = df['standardized_smiles'].tolist()
@@ -37,8 +37,7 @@ Y = np.squeeze(Y)
 Y= np.concatenate((Y[:174],Y[434:661]))
 
 #import similarities
-#tani = pd.read_csv('CAMDA-DILI/processed_data/Standardization/tanimoto_similarities.txt', delimiter=',', header=None)
-tani = pd.read_csv('tanimoto_similarities.txt', delimiter=',', header=None)
+tani = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/tanimoto_similarities.txt', delimiter=',', header=None)
 tani.columns = ['C1', 'C2', 'Tanimoto']
 tani = tani.pivot(index='C1', columns='C2', values='Tanimoto')
 
@@ -211,6 +210,6 @@ df_withdif['similarity_true'] = sim_true
 df_withdif['similarity_false'] = sim_false
 df_withdif['true - false'] = [(true - false) for true,false in zip(sim_true,sim_false)]
     
-df_result.to_csv('CAMDA-DILI/processed_data/LOOCV/result_loocv_svm_processed.csv', sep=',', index=False)
+df_result.to_csv('CAMDA-DILI/Machine_Learning/data/LOOCV_Results/result_loocv_svm_processed.csv', sep=',', index=False)
 
 
