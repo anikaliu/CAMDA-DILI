@@ -154,6 +154,9 @@ inputs.drop(labels=['SMILES'],axis=1,inplace=True)
 cols = ['PubChem_CID', 'Compound Name', 'standardised_smiles', 'vDILIConcern']
 inputs = inputs[cols]
 
+#put ambiguous at the end of the file
+inputs = pd.concat([inputs.iloc[:661,:],inputs.iloc[877:,:],inputs.iloc[661:877,:]])
+
 #export file
 inputs.to_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_incl_ambiguous.csv', sep=',',index=False)
 
