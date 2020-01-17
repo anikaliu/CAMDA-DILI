@@ -23,7 +23,7 @@ def tanimoto(fp1, fp2):
 df = pd.read_csv('CAMDA-DILI/data/processed_data/Standardization/standardized_compounds_incl_ambiguous.csv', delimiter=',')
 
 #generate list of fps from smiles
-smiles = df['standardized_smiles'].tolist()
+smiles = df['standardised_smiles'].tolist()
 mols = [Chem.MolFromSmiles(smile) for smile in smiles]
 fps_bit = [AllChem.GetMorganFingerprintAsBitVect(mol,2, nBits=2048) for mol in mols]
 
