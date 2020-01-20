@@ -1,4 +1,4 @@
-The following files were used as Imput for Pidgin:
+The following files were used as Input for Pidgin:
 
 'CAMDA-DILI/data/processed_data/Target Prediction/training_set_pidgin.smi'
 'CAMDA-DILI/data/processed_data/Target Prediction/ambiguous_pidgin.smi'
