@@ -25,6 +25,7 @@ import pickle
 import os
 import zipfile
 
+
 #import data
 df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
@@ -32,8 +33,9 @@ df = pd.read_csv('CAMDA-DILI/Data_Processing/Target_Prediction/data/training_set
 df = df.T
 X_all = df.iloc[16:,:].to_numpy()
 
+
 # labels (0,1) in Y_all
-Y_all = np.empty([920,1])
+Y_all = np.empty([923,1])
 for i,j in enumerate(df_compounds['vDILIConcern']):
     if j == 'vMost-DILI-Concern' or j == 'vLess-DILI-Concern':
         Y_all[i,0] = 1
@@ -42,16 +44,18 @@ for i,j in enumerate(df_compounds['vDILIConcern']):
         Y_all[i,0] = 0
 Y_all = np.squeeze(Y_all)
 
+
 #remove compounds not accepted by Pidgin from Y_all
-Y_all = np.delete(Y_all,[135,632,666,670,871,919])
+Y_all = np.delete(Y_all,[135,632,665,670,873,922])
+
 
 #ranges specific for PT
 mc = list(range(173))
 lc = list(range(173,433))
 nc = list(range(433,659))
-sider = list(range(659,914))
+sider = list(range(659,917))
 
-#X_fp_mcnc
+#X_pt_mcnc
 
 X_mcnc = np.concatenate((X_all[mc,:],X_all[nc,:]), axis=0)
 
@@ -60,8 +64,9 @@ X_mcnc = np.concatenate((X_all[mc,:],X_all[nc,:]), axis=0)
 Y_mcnc = np.concatenate((Y_all[mc],Y_all[nc]))
 
 cluster = np.squeeze(df_compounds['cluster'].values)
+
 #remove compounds not accepted by Pidgin from cluster
-cluster = np.delete(cluster,[135,632,666,670,871,919])
+cluster = np.delete(cluster,[135,632,665,670,873,922])
 
 cluster_mcnc = np.concatenate((cluster[mc],cluster[nc]))
 
@@ -139,6 +144,7 @@ features_svm = []
 np.random.seed(55)
 state = np.random.get_state()
 
+
 #import skf splits
 pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_tr.pkl', 'rb')
 all_ttsplits_tr = pickle.load(pkl_file)
@@ -147,6 +153,7 @@ pkl_file.close()
 pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_te.pkl', 'rb')
 all_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
+
 
 pkl_file = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/mclcnc_ttsplits_tr.pkl', 'rb')
 mclcnc_ttsplits_tr = pickle.load(pkl_file)
@@ -165,20 +172,23 @@ mcnc_ttsplits_te = pickle.load(pkl_file)
 pkl_file.close()
 
 
-#create mapping all -> all-PT
+
+#create mapping indices all -> all-PT, since 6 compounds not in PT data set (dropped by Pidgin)
+
 all_allpt = {}
-for i in range(920):
+for i in range(923):
     if i <135:
+        #no change in this range
         all_allpt[i] = i
     if i>135 and i<632:
         all_allpt[i] = i-1
-    if i >632 and i < 666:
+    if i >632 and i < 665:
         all_allpt[i] = i-2
-    if i > 666 and i < 670:
+    if i > 665 and i < 670:
         all_allpt[i] = i-3
-    if i >670 and i<871:
+    if i >670 and i<873:
         all_allpt[i] = i-4
-    if i>871 and i<919:
+    if i>873 and i<922:
         all_allpt[i] = i-5
         
 #mapping mclcnc-> mclcnc-PT
@@ -193,7 +203,8 @@ for i in range(401):
     if i>(632-260):
         mcnc_mcncpt[i] = i-2
 
-print(all_ttsplits_te)        
+  
+
 #map splits to PT indices
 def map_splits(splits_in,mapping_dict):
     new_splits = []
@@ -210,16 +221,21 @@ def map_splits(splits_in,mapping_dict):
 
 all_ttsplits_tr = map_splits(all_ttsplits_tr,all_allpt)
 all_ttsplits_te = map_splits(all_ttsplits_te,all_allpt)
+
 mclcnc_ttsplits_tr = map_splits(mclcnc_ttsplits_tr,mclcnc_mclcncpt)
 mclcnc_ttsplits_te = map_splits(mclcnc_ttsplits_te,mclcnc_mclcncpt)
+
 mcnc_ttsplits_tr = map_splits(mcnc_ttsplits_tr,mcnc_mcncpt)
 mcnc_ttsplits_te = map_splits(mcnc_ttsplits_te,mcnc_mcncpt)        
+
+
 
 #0: MCNC, 1: MCLCNC, 2: all
 dict_dataset = {0: 'MCNC.',1: 'MCLCNC.',2: 'all.'}
 xlist = [X_mcnc,X_mclcnc,X_all]
 ylist = [Y_mcnc,Y_mclcnc,Y_all]
 clusterlist = [cluster_mcnc,cluster_mclcnc,cluster]
+
 
 for dataset in range(3):
     X_in = xlist[dataset]
@@ -229,9 +245,9 @@ for dataset in range(3):
     splits_tr = [mcnc_ttsplits_tr, mclcnc_ttsplits_tr, all_ttsplits_tr]
     splits_te = [mcnc_ttsplits_te, mclcnc_ttsplits_te, all_ttsplits_te]
 
-    #true label and 10 times scrambled
+    #true label and 3 times scrambled
 
-    for i in range(11):
+    for i in range(4):
         print('PT','data:',dataset,'scramble',i)
         if i == 0:
             Y = Y_in
@@ -352,7 +368,7 @@ for dataset in range(3):
                 
                 features_svm.append(list(clf2.coef_))
                 
-                
+          
 #export predictions in zip file
 zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
@@ -362,6 +378,7 @@ for i,j in zip(predictions,predictions_ident):
     os.remove('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/Predictions_PT/'+name+'.txt')
 zf.close()
     
+
 #export feature_importances
 df_feat_rf = pd.DataFrame()
 for feat,ident in zip(features_rf,features_ident):
@@ -371,7 +388,7 @@ df_feat_rf.to_csv('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learni
 df_feat_svm = pd.DataFrame()
 for feat,ident in zip(features_svm,features_ident):
     df_feat_svm[ident] = feat
-df_feat_svm.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/svm_feature_coefficients.csv',sep=',',index=False)
+df_feat_svm.to_csv('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/svm_feature_coefficients.csv',sep=',',index=False)
    
 
 df_ts = pd.DataFrame()
@@ -385,7 +402,7 @@ df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
 
-df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/test_scores_PT.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/test_scores_PT.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -397,10 +414,10 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/cv_scores_PT.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/cv_scores_PT.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/best_parameters_PT.pkl','wb')
+output = open('CAMDA-DILI/processed_data/Models/PT/CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/PT/best_parameters_PT.pkl','wb')
 
 pickle.dump(best_params, output)
 
