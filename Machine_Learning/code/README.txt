@@ -4,9 +4,9 @@ The scripts models_ECFP.py, models_MD.py, models_PT.py
 contain the training procedure using  as features ECFP, molecular descriptors and predicted protein targets respectively.
 The steps are:
 -iteration through datasets (DILIrank+SIDER, DILIrank, MCNC)
--correct labels and 10 times y-scrambled
+-correct labels and 3 times y-scrambled
 -separation of the set in 10 folds, 10 times CV (=internal test sets)
--for each of the training folds a grid search CV for hyperparameter optimisation, the algorithms are RF and SVM
+-for each of the training folds a 5-fold grid search CV for hyperparameter optimisation, the algorithms are RF and SVM
 -the best set of parameters is used for predicting the ambiguous compounds
 -save CV scores, best hyperparameters, internal test scores, predictions of ambiguous compounds
 
