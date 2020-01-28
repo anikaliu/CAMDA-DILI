@@ -366,7 +366,7 @@ for dataset in range(3):
                 predictions.append(df_curr_pred)
                 predictions_ident.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
                 
-                features_svm.append(list(clf2.coef_))
+                features_svm.append(list(clf2.coef_[0]))
                 
           
 #export predictions in zip file
