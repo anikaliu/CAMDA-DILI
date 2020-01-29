@@ -118,33 +118,3 @@ plt.ylim((0,110))
 plt.savefig("CAMDA-DILI/processed_data/LOOCV/Training_Data_AD.svg")
        
 
-#generate Figure 2b
-train_data = pd.read_csv("CAMDA-DILI/processed_data/LOOCV/result_loocv_svm_processed.csv")
-test_data = df_ambi_dist
-
-train_data['accuracy_sim_true_class'] = train_data['accuracy_sim_true_class']*100
-train_data['accuracy_sim_false_class'] = train_data['accuracy_sim_false_class']*100
-
-train_data['bins'] = ['0.0-0.1','0.1-0.2','0.2-0.3','0.3-0.4','0.4-0.5','0.5-0.6','0.6-0.7','0.7-0.8','0.8-0.9','0.9-1.0']
-test_data['bins'] = ['0.0-0.1','0.1-0.2','0.2-0.3','0.3-0.4','0.4-0.5','0.5-0.6','0.6-0.7','0.7-0.8','0.8-0.9','0.9-1.0']
-
-colors = ['green','blue','red']
-fig = plt.figure(figsize=(7,10))
-x = np.array(train_data['bins'][:7])
-plt.bar(x=x,height=np.array((train_data['counts_sim_all'][:7]/401)*100), width = 0.5, color='blue',align='center') # 
-plt.bar(x=x,height=np.array((test_data['counts_sim_all'][:7]/55)*100), width = 0.5, color='orange',align='edge') # 
-plt.xlabel("Mean Tanimoto similarity to 5 nearest neighbours",labelpad=20)
-plt.ylabel("Relative frequency (%)")
-# https://stackoverflow.com/questions/3899980/how-to-change-the-font-size-on-a-matplotlib-plot
-plt.rcParams.update({'font.size': 10})
-plt.rc('axes', labelsize=20)
-plt.rc('xtick', labelsize=20)
-plt.rc('ytick', labelsize=20)
-plt.rc('legend', fontsize=20)
-pop_a = mpatches.Patch(color='blue', label='DILIrank (-vLessConcern)')
-pop_b = mpatches.Patch(color='orange', label='FDA validation set')
-plt.legend(handles=[pop_a,pop_b])
-plt.xticks(rotation=45)
-plt.legend(handles=[pop_a,pop_b], bbox_to_anchor=(0.5,1.12), loc="upper center",ncol=2)
-plt.text(0.01, 0.96, '(b)', transform=plt.gca().transAxes, size = 20)
-plt.savefig("CAMDA-DILI/processed_data/LOOCV/Training_vs_validation_AD.svg")
