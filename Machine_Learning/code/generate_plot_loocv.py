@@ -12,7 +12,7 @@ import matplotlib
 import matplotlib.patches as mpatches
 
 #generate file for similarities mcnc, ambiguous
-tani_all = pd.read_csv('CAMDA-DILI/processed_data/Standardization/tanimoto_similarities.txt', delimiter=',', header=None)
+tani_all = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/tanimoto_similarities.txt', delimiter=',', header=None)
 tani_all.columns = ['C1', 'C2', 'Tanimoto']
 tani_all = tani_all.pivot(index='C1', columns='C2', values='Tanimoto')
 
@@ -74,7 +74,7 @@ for i,row in df_ambi_sim.iterrows():
             
             
 #generate Plot 2a
-train_data = pd.read_csv("CAMDA-DILI/processed_data/LOOCV/result_loocv_svm_processed.csv")
+train_data = pd.read_csv("CAMDA-DILI/Machine_Learning/data/LOOCV_Results/result_loocv_svm_processed.csv")
 test_data = df_ambi_dist
 
 train_data['accuracy_sim_all'] = train_data['accuracy_sim_all']*100
@@ -115,6 +115,6 @@ plt.xticks(rotation=45)
 plt.ylim((0,110))   
 
 
-plt.savefig("CAMDA-DILI/processed_data/LOOCV/Training_Data_AD.svg")
+plt.savefig("CAMDA-DILI/Machine_Learning/plots/Training_Data_AD.svg")
        
 
