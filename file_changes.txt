@@ -1,0 +1,18 @@
+previous name - new name
+
+Models (directory) - Model_Results_Parameters (directory)
+LOOCV (directory) - LOOCV_Results (directory)
+yscramb_testset_gridsearch_ECFP.py - models_ECFP.py
+yscramb_testset_gridsearch_MD.py - models_MD.py
+yscramb_testset_gridsearch_PT.py - models_PT.py
+LOOCV_SVM_MCNC.py - loocv_best_model.py
+best_params_FP_yscr.pkl - best_parameters_ECFP.pkl
+cv_scores_FP_yscr.csv - cv_scores_ECFP.csv 
+ts_scores_FP_yscr.csv - test_scores_ECFP.csv
+best_params_MD_yscr.pkl - best_parameters_MD.pkl
+cv_scores_MD_yscr.csv - cv_scores_MD.csv
+ts_scores_MD_yscr.csv - test_scores_MD.csv
+best_params_PT_yscr.pkl -  best_parameters_PT.pkl
+cv_scores_PT_yscr.csv - cv_scores_PT.csv
+ts_scores_PT_yscr.csv - test_scores_PT.csv 
+featureimps_coeffs_pt.csv - feature_importances_PT.csv

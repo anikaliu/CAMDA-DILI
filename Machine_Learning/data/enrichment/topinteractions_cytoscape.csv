@@ -1,0 +1,76 @@
+,Description,geneID,p.adjust,Method
+1,Metabolism of lipids,CSNK2A2,0.0249103590093238,RF
+2,Metabolism of lipids,EP300,0.0249103590093238,RF
+3,Metabolism of lipids,CSNK2B,0.0249103590093238,RF
+4,Metabolism of lipids,AGPAT2,0.0249103590093238,RF
+5,Metabolism of lipids,CYP1A2,0.0249103590093238,RF
+6,Metabolism of lipids,PTGS2,0.0249103590093238,RF
+7,Metabolism of lipids,RXRA,0.0249103590093238,RF
+8,Metabolism of lipids,AKR1B1,0.0249103590093238,RF
+9,Metabolism of lipids,PTGES,0.0249103590093238,RF
+10,Metabolism of lipids,AKR1C3,0.0249103590093238,RF
+11,Metabolism of lipids,CYP2C9,0.0249103590093238,RF
+12,Metabolism of lipids,AKR1C2,0.0249103590093238,RF
+13,Arachidonic acid metabolism,CYP1A2,0.0249103590093238,RF
+14,Arachidonic acid metabolism,PTGS2,0.0249103590093238,RF
+15,Arachidonic acid metabolism,PTGES,0.0249103590093238,RF
+16,Arachidonic acid metabolism,AKR1C3,0.0249103590093238,RF
+17,Arachidonic acid metabolism,CYP2C9,0.0249103590093238,RF
+18,Fatty acid metabolism,CYP1A2,0.0249103590093238,RF
+19,Fatty acid metabolism,PTGS2,0.0249103590093238,RF
+20,Fatty acid metabolism,RXRA,0.0249103590093238,RF
+21,Fatty acid metabolism,PTGES,0.0249103590093238,RF
+22,Fatty acid metabolism,AKR1C3,0.0249103590093238,RF
+23,Fatty acid metabolism,CYP2C9,0.0249103590093238,RF
+24,Regulation of TP53 Activity through Phosphorylation,MAPK11,0.0338341404570862,RF
+25,Regulation of TP53 Activity through Phosphorylation,DYRK2,0.0338341404570862,RF
+26,Regulation of TP53 Activity through Phosphorylation,CSNK2A2,0.0338341404570862,RF
+27,Regulation of TP53 Activity through Phosphorylation,PRKAB1,0.0338341404570862,RF
+28,Regulation of TP53 Activity through Phosphorylation,CSNK2B,0.0338341404570862,RF
+29,Synthesis of Prostaglandins (PG) and Thromboxanes (TX),PTGS2,0.0338341404570862,RF
+30,Synthesis of Prostaglandins (PG) and Thromboxanes (TX),PTGES,0.0338341404570862,RF
+31,Synthesis of Prostaglandins (PG) and Thromboxanes (TX),AKR1C3,0.0338341404570862,RF
+32,RUNX1 interacts with co-factors whose precise effect on RUNX1 targets is not known,CSNK2A2,0.0338341404570862,RF
+33,RUNX1 interacts with co-factors whose precise effect on RUNX1 targets is not known,EP300,0.0338341404570862,RF
+34,RUNX1 interacts with co-factors whose precise effect on RUNX1 targets is not known,CSNK2B,0.0338341404570862,RF
+35,Mitochondrial biogenesis,MAPK11,0.0338341404570862,RF
+36,Mitochondrial biogenesis,MAPK12,0.0338341404570862,RF
+37,Mitochondrial biogenesis,PRKAB1,0.0338341404570862,RF
+38,Mitochondrial biogenesis,RXRA,0.0338341404570862,RF
+39,Regulation of TP53 Activity,MAPK11,0.0368051836016588,RF
+40,Regulation of TP53 Activity,DYRK2,0.0368051836016588,RF
+41,Regulation of TP53 Activity,CSNK2A2,0.0368051836016588,RF
+42,Regulation of TP53 Activity,EP300,0.0368051836016588,RF
+43,Regulation of TP53 Activity,PRKAB1,0.0368051836016588,RF
+44,Regulation of TP53 Activity,CSNK2B,0.0368051836016588,RF
+45,Biological oxidations,NQO2,0.013542986978253,SVM
+46,Biological oxidations,CYP1A2,0.013542986978253,SVM
+47,Biological oxidations,RXRA,0.013542986978253,SVM
+48,Biological oxidations,PTGS1,0.013542986978253,SVM
+49,Biological oxidations,AKR1A1,0.013542986978253,SVM
+50,Biological oxidations,NCOA2,0.013542986978253,SVM
+51,Biological oxidations,CES1,0.013542986978253,SVM
+52,Biological oxidations,CYP2C9,0.013542986978253,SVM
+53,Biological oxidations,TBXAS1,0.013542986978253,SVM
+54,Phase I - Functionalization of compounds,NQO2,0.013542986978253,SVM
+55,Phase I - Functionalization of compounds,CYP1A2,0.013542986978253,SVM
+56,Phase I - Functionalization of compounds,RXRA,0.013542986978253,SVM
+57,Phase I - Functionalization of compounds,PTGS1,0.013542986978253,SVM
+58,Phase I - Functionalization of compounds,NCOA2,0.013542986978253,SVM
+59,Phase I - Functionalization of compounds,CES1,0.013542986978253,SVM
+60,Phase I - Functionalization of compounds,CYP2C9,0.013542986978253,SVM
+61,Phase I - Functionalization of compounds,TBXAS1,0.013542986978253,SVM
+62,Fatty acid metabolism,CYP1A2,0.0212084888080145,SVM
+63,Fatty acid metabolism,RXRA,0.0212084888080145,SVM
+64,Fatty acid metabolism,PTGS1,0.0212084888080145,SVM
+65,Fatty acid metabolism,AKR1C3,0.0212084888080145,SVM
+66,Fatty acid metabolism,ELOVL6,0.0212084888080145,SVM
+67,Fatty acid metabolism,MAPKAPK2,0.0212084888080145,SVM
+68,Fatty acid metabolism,CYP2C9,0.0212084888080145,SVM
+69,Fatty acid metabolism,TBXAS1,0.0212084888080145,SVM
+70,Arachidonic acid metabolism,CYP1A2,0.0390168459486338,SVM
+71,Arachidonic acid metabolism,PTGS1,0.0390168459486338,SVM
+72,Arachidonic acid metabolism,AKR1C3,0.0390168459486338,SVM
+73,Arachidonic acid metabolism,MAPKAPK2,0.0390168459486338,SVM
+74,Arachidonic acid metabolism,CYP2C9,0.0390168459486338,SVM
+75,Arachidonic acid metabolism,TBXAS1,0.0390168459486338,SVM

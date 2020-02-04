@@ -1,0 +1,35 @@
+,nodes,gene_annot,pathway_annot
+1,CSNK2A2,RF,NA
+2,EP300,RF,NA
+3,CSNK2B,RF,NA
+4,AGPAT2,RF,NA
+5,CYP1A2,SVM|RF,NA
+6,PTGS2,RF,NA
+7,RXRA,SVM|RF,NA
+8,AKR1B1,RF,NA
+9,PTGES,RF,NA
+10,AKR1C3,SVM|RF,NA
+11,CYP2C9,SVM|RF,NA
+12,AKR1C2,RF,NA
+13,MAPK11,RF,NA
+14,DYRK2,RF,NA
+15,PRKAB1,RF,NA
+16,MAPK12,RF,NA
+17,NQO2,SVM,NA
+18,PTGS1,SVM,NA
+19,AKR1A1,SVM,NA
+20,NCOA2,SVM,NA
+21,CES1,SVM,NA
+22,TBXAS1,SVM,NA
+23,ELOVL6,SVM,NA
+24,MAPKAPK2,SVM,NA
+25,Metabolism of lipids,NA,RF
+26,Arachidonic acid metabolism,NA,SVM|RF
+27,Fatty acid metabolism,NA,SVM|RF
+28,Regulation of TP53 Activity through Phosphorylation,NA,RF
+29,Synthesis of Prostaglandins (PG) and Thromboxanes (TX),NA,RF
+30,RUNX1 interacts with co-factors whose precise effect on RUNX1 targets is not known,NA,RF
+31,Mitochondrial biogenesis,NA,RF
+32,Regulation of TP53 Activity,NA,RF
+33,Biological oxidations,NA,SVM
+34,Phase I - Functionalization of compounds,NA,SVM
