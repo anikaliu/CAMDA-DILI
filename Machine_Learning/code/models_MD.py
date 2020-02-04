@@ -27,15 +27,16 @@ import pickle
 import os
 import zipfile
 
+
 #import data
-df_training = pd.read_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/mol_descriptors_training.csv', delimiter=',',index_col=0)
+df_training = pd.read_csv('CAMDA-DILI/Data_Processing/Molecular_Descriptors/data/mol_descriptors_training.csv', delimiter=',',index_col=0)
 df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
 X_all = scale(df_training.values)
 
         
 # labels (0,1) in Y_all
-Y_all = np.empty([920,1])
+Y_all = np.empty([923,1])
 for i,j in enumerate(df_compounds['vDILIConcern']):
     if j == 'vMost-DILI-Concern' or j == 'vLess-DILI-Concern':
         Y_all[i,0] = 1
@@ -47,7 +48,7 @@ Y_all = np.squeeze(Y_all)
 mc = list(range(174))
 lc = list(range(174,434))
 nc = list(range(434,661))
-sider = list(range(661,920))
+sider = list(range(661,923))
 
 #X_fp_mcnc
 
@@ -66,7 +67,7 @@ Y_mclcnc = np.concatenate((Y_all[mc],Y_all[lc],Y_all[nc]))
 cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 
 #data for ambiguous, fp
-df_ambis = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/MD/mol_descriptors_ambiguous.csv',delimiter=',',index_col=0)
+df_ambis = pd.read_csv('CAMDA-DILI/Data_Processing/Molecular_Descriptors/data/mol_descriptors_ambiguous.csv',delimiter=',',index_col=0)
 
 X_ambis = scale(df_ambis.values)
 
@@ -149,9 +150,10 @@ for dataset in range(3):
     scrambledict[dict_dataset[dataset][:-1]] = []
     tsdict[dict_dataset[dataset][:-1]] = {}
     cvdict[dict_dataset[dataset][:-1]] = {}
-    #true label and 10 times scrambled
+    
+    #true label and 3 times scrambled
 
-    for i in range(11):
+    for i in range(4):
         print('MD',dataset,i)
         if i == 0:
             Y = Y_in
@@ -290,10 +292,9 @@ for dataset in range(3):
 zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD/'+name+'.txt',sep=',',index=False)
+    i.to_csv(path_or_buf= 'CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD/'+name+'.txt',sep=',',index=False)
     zf.write('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD/'+name+'.txt')
     os.remove('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD/'+name+'.txt')
-zf.close()
     
 df_ts = pd.DataFrame()
 df_ts['splits'] = ts_splits

@@ -27,23 +27,24 @@ import pickle
 import os
 import zipfile
 
+
 #import the data
 df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
 
 #generate FPs
-smis = df_compounds['standardized_smiles'].tolist()
+smis = df_compounds['standardised_smiles'].tolist()
 mols = [Chem.MolFromSmiles(smile) for smile in smis]
 fps_bit = [Chem.GetMorganFingerprintAsBitVect(mol,2, nBits=2048) for mol in mols]
 
 #store FP bits as input in X_fp_all
-X_all = np.empty([920,2048])
+X_all = np.empty([923,2048])
 for i,j in enumerate(fps_bit):
     for k,l in enumerate(list(j)):
         X_all[i,k] = l
         
 # labels (0,1) in Y_all
-Y_all = np.empty([920,1])
+Y_all = np.empty([923,1])
 for i,j in enumerate(df_compounds['vDILIConcern']):
     if j == 'vMost-DILI-Concern' or j == 'vLess-DILI-Concern':
         Y_all[i,0] = 1
@@ -55,7 +56,7 @@ Y_all = np.squeeze(Y_all)
 mc = list(range(174))
 lc = list(range(174,434))
 nc = list(range(434,661))
-sider = list(range(661,920))
+sider = list(range(661,923))
 
 #X_fp_mcnc
 
@@ -73,8 +74,9 @@ X_mclcnc = np.concatenate((X_all[mc,:],X_all[lc,:],X_all[nc,:]), axis=0)
 Y_mclcnc = np.concatenate((Y_all[mc],Y_all[lc],Y_all[nc]))
 cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 
+
 #data for ambiguous, fp
-df_inclambi = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data//standardized_compounds_incl_ambiguous.csv', delimiter=',')
+df_inclambi = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_incl_ambiguous.csv', delimiter=',')
 
 
 df_pred = pd.read_csv('CAMDA-DILI/Data_Processing/Challenge_Data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
@@ -86,7 +88,7 @@ for i, row in df_inclambi.iterrows():
 
 df_ambis = df_inclambi.iloc[ambis_indices[:-1],:]
 
-smis = df_ambis['standardized_smiles'].tolist()
+smis = df_ambis['standardised_smiles'].tolist()
 mols = [Chem.MolFromSmiles(smile) for smile in smis]
 fps_bit = [Chem.GetMorganFingerprintAsBitVect(mol,2, nBits=2048) for mol in mols]
 X_ambis = np.empty([55,2048])
@@ -174,6 +176,7 @@ xlist = [X_mcnc,X_mclcnc,X_all]
 ylist = [Y_mcnc,Y_mclcnc,Y_all]
 clusterlist = [cluster_mcnc,cluster_mclcnc,cluster]
 
+
 for dataset in range(3):
     X_in = xlist[dataset]
     size = X_in.shape[0]
@@ -181,9 +184,9 @@ for dataset in range(3):
     cluster_in = clusterlist[dataset]    
 
 
-    #true label and 10 times scrambled
+    #true label and 3 times scrambled
 
-    for i in range(11):
+    for i in range(4):
         print('ECFP','data:',dataset,'scramble',i)
         if i == 0:
             Y = Y_in
@@ -324,13 +327,15 @@ for dataset in range(3):
                 predictions.append(df_curr_pred)
                 predictions_ident.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
         
+
 #export predictions in zip file
 zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
-    i.to_csv(path_or_buf='CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt',sep=',',index=False)
+    i.to_csv(path_or_buf= 'CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt',sep=',',index=False)
     zf.write('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt')
     os.remove('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/Predictions_ECFP/'+name+'.txt')
+
 zf.close()
     
 df_ts = pd.DataFrame()
@@ -356,7 +361,9 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
+
 df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/cv_scores_ECFP.csv',sep=',',index=False)
+
 
 #export best params
 output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/best_parameters_ECFP.pkl','wb')
@@ -364,6 +371,7 @@ output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/be
 pickle.dump(best_params, output)
 
 output.close()
+
 
 #export splits
 output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/ECFP/splits/all_ttsplits_tr.pkl','wb')
