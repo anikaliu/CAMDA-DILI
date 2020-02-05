@@ -3,11 +3,11 @@ library(tidyverse)
 library(ggplot2)
 
 ####Aggregate individual performance files####
-cv_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/cv_scores_FP_yscr.csv')%>%
+cv_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/cv_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='ECFP')
-ts_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/ts_scores_FP_yscr.csv')%>%
+ts_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/test_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='ECFP')
@@ -15,11 +15,11 @@ ex_ECFP<-read.csv('../data/FDA_Validation_Set_Results/Predictions_ECFP4/ambiguou
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='ECFP')
-cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD_yscr.csv')%>%
+cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='MD')
-ts_MD<-read.csv('../data/Model_Results_Parameters/MD/ts_scores_MD_yscr.csv')%>%
+ts_MD<-read.csv('../data/Model_Results_Parameters/MD/test_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='MD')
@@ -27,11 +27,11 @@ ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD/ambiguous_res
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='MD')
-cv_PT<-read.csv('../data/Model_Results_Parameters/PT/cv_scores_PT_yscr.csv')%>%
+cv_PT<-read.csv('../data/Model_Results_Parameters/PT/cv_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='PT')
-ts_PT<-read.csv('../data/Model_Results_Parameters/PT/ts_scores_PT_yscr.csv')%>%
+ts_PT<-read.csv('../data/Model_Results_Parameters/PT/test_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='PT')
