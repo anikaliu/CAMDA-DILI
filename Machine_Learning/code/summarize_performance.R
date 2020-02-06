@@ -3,11 +3,11 @@ library(tidyverse)
 library(ggplot2)
 
 ####Aggregate individual performance files####
-cv_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/cv_scores_FP_yscr.csv')%>%
+cv_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/cv_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='ECFP')
-ts_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/ts_scores_FP_yscr.csv')%>%
+ts_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/test_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='ECFP')
@@ -15,11 +15,11 @@ ex_ECFP<-read.csv('../data/FDA_Validation_Set_Results/Predictions_ECFP4/ambiguou
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='ECFP')
-cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD_yscr.csv')%>%
+cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='MD')
-ts_MD<-read.csv('../data/Model_Results_Parameters/MD/ts_scores_MD_yscr.csv')%>%
+ts_MD<-read.csv('../data/Model_Results_Parameters/MD/test_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='MD')
@@ -27,11 +27,11 @@ ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD/ambiguous_res
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='MD')
-cv_PT<-read.csv('../data/Model_Results_Parameters/PT/cv_scores_PT_yscr.csv')%>%
+cv_PT<-read.csv('../data/Model_Results_Parameters/PT/cv_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='CV', 'descriptor'='PT')
-ts_PT<-read.csv('../data/Model_Results_Parameters/PT/ts_scores_PT_yscr.csv')%>%
+ts_PT<-read.csv('../data/Model_Results_Parameters/PT/test_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='PT')
@@ -53,7 +53,7 @@ df_performance$dataset_readable=NA
 df_performance$dataset_readable[which(df_performance$dataset=='all')]<-'DILIrank \n (+SIDER)'
 df_performance$dataset_readable[which(df_performance$dataset=='MCLCNC')]<-'DILIrank'
 df_performance$dataset_readable[which(df_performance$dataset=='MCNC')]<-'DILIrank \n (-vLessConcern)'
-write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performance.csv', row.names = F)
+write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performance_Peter_Test.csv', row.names = F)
 
 ####Generate figure####
 #Convert to factors and assing orders
@@ -89,10 +89,10 @@ plot_performance<-function(df_models){
 
 #Generate and save
 gg_ECFP<-plot_performance(df_models%>%filter(descriptor=='ECFP'))
-ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
+ggsave(gg_ECFP,filename = '../plots/ECFP_performance_Peter_Test2.pdf', height = 4.5, width=8)
 
 gg_MD<-plot_performance(df_models%>%filter(descriptor=='MD'))
-ggsave(gg_MD,filename = '../plots/MD_performance.pdf', height = 4.5, width=8)
+ggsave(gg_MD,filename = '../plots/MD_performance_Peter_Test2.pdf.pdf', height = 4.5, width=8)
 
 gg_PT<-plot_performance(df_models%>%filter(descriptor=='PT'))
-ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
+ggsave(gg_PT,filename = '../plots/PT_performance_Peter_Test2.pdf.pdf', height = 4.5, width=8)
