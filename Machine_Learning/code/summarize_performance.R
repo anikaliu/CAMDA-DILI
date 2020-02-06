@@ -89,10 +89,10 @@ plot_performance<-function(df_models){
 
 #Generate and save
 gg_ECFP<-plot_performance(df_models%>%filter(descriptor=='ECFP'))
-ggsave(gg_ECFP,filename = '../plots/ECFP_performance_Peter_Test2.pdf', height = 4.5, width=8)
+ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
 
 gg_MD<-plot_performance(df_models%>%filter(descriptor=='MD'))
-ggsave(gg_MD,filename = '../plots/MD_performance_Peter_Test2.pdf.pdf', height = 4.5, width=8)
+ggsave(gg_MD,filename = '../plots/MD_performance.pdf', height = 4.5, width=8)
 
 gg_PT<-plot_performance(df_models%>%filter(descriptor=='PT'))
-ggsave(gg_PT,filename = '../plots/PT_performance_Peter_Test2.pdf.pdf', height = 4.5, width=8)
+ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
