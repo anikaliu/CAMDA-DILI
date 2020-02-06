@@ -1951,12 +1951,12 @@ g&lt;-ggExtra::ggMarginal(p, type = &quot;histogram&quot;, bins=100)</code></pre
 <p>Prepare for cytoscape</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU0lfdGFibGU8LWFsbGZlYXQlPiVpbm5lcl9qb2luKGRmX2ZlYXRpbXApJT4lbGVmdF9qb2luKGRmX3RhcmdldGluZm8pJT4lZmlsdGVyKFJGX21jbmM+MC4wMDE4fFNWTV9tY25jPjAuMjMpJT4lZmlsdGVyKG1jbmM8MC4wNSklPiVkcGx5cjo6c2VsZWN0KFN5bWJvbCxOYW1lLCBQcm90ZWluX0NsYXNzaWZpY2F0aW9uLCBSRl9tY25jLCBTVk1fbWNuYylcblxuYGBgIn0= -->
-<pre class="r"><code>SI_table&lt;-allfeat%&gt;%inner_join(df_featimp)%&gt;%left_join(df_targetinfo)%&gt;%filter(RF_mcnc&gt;0.0018|SVM_mcnc&gt;0.23)%&gt;%filter(mcnc&lt;0.05)%&gt;%dplyr::select(Symbol,Name, Protein_Classification, RF_mcnc, SVM_mcnc)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubm9kZXM8LWZ1bGxfam9pbihub2Rlc19nZW5lcyxub2Rlc19wYXRod2F5cylcblxuYGBgIn0= -->
+<pre class="r"><code>nodes&lt;-full_join(nodes_genes,nodes_pathways)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiSm9pbmluZywgYnkgPSBcIlVuaXByb3RcIkNvbHVtbiBgVW5pcHJvdGAgam9pbmluZyBjaGFyYWN0ZXIgdmVjdG9yIGFuZCBmYWN0b3IsIGNvZXJjaW5nIGludG8gY2hhcmFjdGVyIHZlY3RvckpvaW5pbmcsIGJ5ID0gXCJVbmlwcm90XCJDb2x1bW4gYFVuaXByb3RgIGpvaW5pbmcgY2hhcmFjdGVyIHZlY3RvciBhbmQgZmFjdG9yLCBjb2VyY2luZyBpbnRvIGNoYXJhY3RlciB2ZWN0b3JcbiJ9 -->
-<pre><code>Joining, by = &quot;Uniprot&quot;Column `Uniprot` joining character vector and factor, coercing into character vectorJoining, by = &quot;Uniprot&quot;Column `Uniprot` joining character vector and factor, coercing into character vector</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiSm9pbmluZywgYnkgPSBcIm5vZGVzXCJDb2x1bW4gYG5vZGVzYCBqb2luaW5nIGZhY3RvcnMgd2l0aCBkaWZmZXJlbnQgbGV2ZWxzLCBjb2VyY2luZyB0byBjaGFyYWN0ZXIgdmVjdG9yXG4ifQ== -->
+<pre><code>Joining, by = &quot;nodes&quot;Column `nodes` joining factors with different levels, coercing to character vector</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
