@@ -6,7 +6,7 @@ library(ggplot2)
 cv_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/cv_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
-  mutate('testset'='CV', 'descriptor'='ECFP')
+  mutate('testset'='LOCO-CV', 'descriptor'='ECFP')
 ts_ECFP<-read.csv('../data/Model_Results_Parameters/ECFP/test_scores_ECFP.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
@@ -18,7 +18,7 @@ ex_ECFP<-read.csv('../data/FDA_Validation_Set_Results/Predictions_ECFP4/ambiguou
 cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
-  mutate('testset'='CV', 'descriptor'='MD')
+  mutate('testset'='LOCO-CV', 'descriptor'='MD')
 ts_MD<-read.csv('../data/Model_Results_Parameters/MD/test_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
@@ -30,7 +30,7 @@ ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD/ambiguous_res
 cv_PT<-read.csv('../data/Model_Results_Parameters/PT/cv_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
-  mutate('testset'='CV', 'descriptor'='PT')
+  mutate('testset'='LOCO-CV', 'descriptor'='PT')
 ts_PT<-read.csv('../data/Model_Results_Parameters/PT/test_scores_PT.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
@@ -53,12 +53,12 @@ df_performance$dataset_readable=NA
 df_performance$dataset_readable[which(df_performance$dataset=='all')]<-'DILIrank \n (+SIDER)'
 df_performance$dataset_readable[which(df_performance$dataset=='MCLCNC')]<-'DILIrank'
 df_performance$dataset_readable[which(df_performance$dataset=='MCNC')]<-'DILIrank \n (-vLessConcern)'
-write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performance_Peter_Test.csv', row.names = F)
+write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performance.csv', row.names = F)
 
 ####Generate figure####
 #Convert to factors and assing orders
 df_performance$dataset_readable<-factor(df_performance$dataset_readable, levels=c('DILIrank \n (-vLessConcern)','DILIrank','DILIrank \n (+SIDER)'))
-df_performance$testset<-factor(df_performance$testset, levels=c('CV','External Test Set','FDA Validation Set'))
+df_performance$testset<-factor(df_performance$testset, levels=c('LOCO-CV','External Test Set','FDA Validation Set'))
 #true_or_y_scrambled_labels_used =1 means standard model, everything else is scrambled
 df_models<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)
