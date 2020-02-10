@@ -19,14 +19,14 @@ mols = [Chem.MolFromSmiles(smile) for smile in smis]
 fps_bit = [Chem.GetMorganFingerprintAsBitVect(mol,2, nBits=2048) for mol in mols]
 
 #store FP bits as input in X
-X = np.empty([920,2048])
+X = np.empty([923,2048])
 for i,j in enumerate(fps_bit):
     for k,l in enumerate(list(j)):
         X[i,k] = l
 X = np.concatenate((X[:174,:],X[434:661,:]))
        
 # labels (0,1) in Y
-Y = np.empty([920,1])
+Y = np.empty([923,1])
 for i,j in enumerate(df['vDILIConcern']):
     if j == 'vMost-DILI-Concern' or j == 'vLess-DILI-Concern':
         Y[i,0] = 1
