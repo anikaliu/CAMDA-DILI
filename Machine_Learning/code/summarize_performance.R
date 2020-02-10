@@ -59,24 +59,25 @@ write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performanc
 #Convert to factors and assing orders
 df_performance$dataset_readable<-factor(df_performance$dataset_readable, levels=c('DILIrank \n (-vLessConcern)','DILIrank','DILIrank \n (+SIDER)'))
 df_performance$testset<-factor(df_performance$testset, levels=c('CV','External Test Set','FDA Validation Set'))
+
 #true_or_y_scrambled_labels_used =1 means standard model, everything else is scrambled
 df_models<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)
 df_scrambledmedians<-df_performance%>%
   filter(true_or_y_scrambled_labels_used !=1)%>%
-  group_by(dataset_readable, method, testset)%>%summarise("median_balacc"=median(balanced_accuracy))%>%mutate('scrambled'="Scrambled performance")
+  group_by(dataset_readable, method, testset,descriptor)%>%summarise("median_balacc"=median(balanced_accuracy))%>%mutate('scrambled'="Scrambled performance")
 df_standardmeans<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)%>%
-  group_by(dataset_readable, method, testset)%>%summarise("median_balacc"=mean(balanced_accuracy))%>%mutate('mean'="Mean performance")
+  group_by(dataset_readable, method, testset, descriptor)%>%summarise("median_balacc"=mean(balanced_accuracy))%>%mutate('mean'="Mean performance")
 
 #Plotting function
-plot_performance<-function(df_models){
-  g <- ggplot(data = df_models,aes(x=dataset_readable, y=balanced_accuracy )) +
-    geom_boxplot(data = df_models, aes(fill=method))+
-    geom_point(data=df_scrambledmedians,
+plot_performance<-function(df_models, descriptor_oi){
+  g <- ggplot(data = df_models%>%filter(descriptor==descriptor_oi),aes(x=dataset_readable, y=balanced_accuracy )) +
+    geom_boxplot(data = df_models%>%filter(descriptor==descriptor_oi), aes(fill=method))+
+    geom_point(data=df_scrambledmedians%>%filter(descriptor==descriptor_oi),
                aes(y=median_balacc,fill=method, shape=scrambled, group=method),
                position=position_dodge(width=0.75), size=2)+
-    geom_point(data=df_standardmeans,
+    geom_point(data=df_standardmeans%>%filter(descriptor==descriptor_oi),
                aes(y=median_balacc,fill=method,  shape=mean, group=method),
                position=position_dodge(width=0.75), size=2)+
     scale_shape_manual(values=c(23,24))+
@@ -88,11 +89,11 @@ plot_performance<-function(df_models){
 }
 
 #Generate and save
-gg_ECFP<-plot_performance(df_models%>%filter(descriptor=='ECFP'))
+gg_ECFP<-plot_performance(df_models, descriptor_oi = 'ECFP')
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
 
-gg_MD<-plot_performance(df_models%>%filter(descriptor=='MD'))
+gg_MD<-plot_performance(df_models, descriptor_oi = 'MD')
 ggsave(gg_MD,filename = '../plots/MD_performance.pdf', height = 4.5, width=8)
 
-gg_PT<-plot_performance(df_models%>%filter(descriptor=='PT'))
+gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
 ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
