@@ -58,12 +58,8 @@ write.csv(df_performance,'../data/Model_Results_Parameters/summarized_performanc
 ####Generate figure####
 #Convert to factors and assing orders
 df_performance$dataset_readable<-factor(df_performance$dataset_readable, levels=c('DILIrank \n (-vLessConcern)','DILIrank','DILIrank \n (+SIDER)'))
-<<<<<<< HEAD
-df_performance$testset<-factor(df_performance$testset, levels=c('CV','External Test Set','FDA Validation Set'))
 
-=======
 df_performance$testset<-factor(df_performance$testset, levels=c('LOCO-CV','External Test Set','FDA Validation Set'))
->>>>>>> cc8176256078f99b43405fbffdac4193caafbfb3
 #true_or_y_scrambled_labels_used =1 means standard model, everything else is scrambled
 df_models<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)
@@ -95,9 +91,12 @@ plot_performance<-function(df_models, descriptor_oi){
 #Generate and save
 gg_ECFP<-plot_performance(df_models, descriptor_oi = 'ECFP')
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
+ggsave(gg_ECFP,filename = '../plots/ECFP_performance.jpeg', height = 4.5, width=8)
 
 gg_MD<-plot_performance(df_models, descriptor_oi = 'MD')
 ggsave(gg_MD,filename = '../plots/MD_performance.pdf', height = 4.5, width=8)
+ggsave(gg_MD,filename = '../plots/MD_performance.jpeg', height = 4.5, width=8)
 
 gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
 ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
+ggsave(gg_PT,filename = '../plots/PT_performance.jpeg', height = 4.5, width=8)
