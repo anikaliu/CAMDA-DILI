@@ -90,6 +90,7 @@ plot_performance<-function(df_models, descriptor_oi){
 
 #Generate and save
 gg_ECFP<-plot_performance(df_models, descriptor_oi = 'ECFP')
+<<<<<<< HEAD
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 95, width=170, units="mm")
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.jpeg', height = 95, width=170, units="mm")
 
@@ -100,3 +101,15 @@ ggsave(gg_MD,filename = '../plots/MD_performance.jpeg', height = 95, width=170, 
 gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
 ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 95, width=170, units="mm")
 ggsave(gg_PT,filename = '../plots/PT_performance.jpeg', height = 95, width=170, units="mm")
+=======
+ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
+ggsave(gg_ECFP,filename = '../plots/ECFP_performance.jpeg', height = 4.5, width=8)
+
+gg_MD<-plot_performance(df_models, descriptor_oi = 'MD')
+ggsave(gg_MD,filename = '../plots/MD_performance.pdf', height = 4.5, width=8)
+ggsave(gg_MD,filename = '../plots/MD_performance.jpeg', height = 4.5, width=8)
+
+gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
+ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
+ggsave(gg_PT,filename = '../plots/PT_performance.jpeg', height = 4.5, width=8)
+>>>>>>> ac80edffc2b1a4ab2d487f9a56360342e05270a1
