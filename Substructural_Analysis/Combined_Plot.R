@@ -13,7 +13,7 @@ library(cowplot)
 library(ggsci)
 
 
-df <- read_csv("./PPV_0_All_substructure_Stats_Moss_Inactive_file_only.csv")
+df <- read_csv("./Structural_alerts_with_DrugBank.csv")
 df <- df[df$p_value <= 0.05, ]
 
 
@@ -74,7 +74,8 @@ p2 <- insert_yaxis_grob(p1, y_box, grid::unit(0.7, "in"),position = "right")
 ggdraw(p2)
 
 
-#ggsave(p2, filename = 'Combined_SS.jpeg', height=3.7, width=6)
+ggsave(p2, filename = './Plots/Figure5.jpeg', height = 95, width=170, units="mm")
+ggsave(p2, filename = './Plots/Figure5.pdf', height = 95, width=170, units="mm")
 
 #p3 <- p2 + 
 

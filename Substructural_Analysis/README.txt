@@ -17,6 +17,7 @@ Purpose: (i) Generating DILIrank(-vLessConcern) dataset for SARpy (Most_No_DILIC
 (B)
 Script: KNIME workflow in 'KNIME_project MoSS substructures_final.knwf'. Input 'moss_input.csv' via copying data manually into table creator node
 Purpose: Generating MoSS SAs (moss_results.csv is outputted)
+Note: In "CSV Writer" node; please configure the output location as "GitHub/CAMDA-DILI/Substructural_Analysis/Data/moss_output.csv" directory
 
 (C) 
 Script: DILI_SUBSTRUCTURES_USE_ALL.ipynb
@@ -29,4 +30,5 @@ Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised i
 (E)
 Script: Combined_Plot.R
 Purpose: Generate Figure 5
+Note: Open in R studio and set working directory to source file location
 
