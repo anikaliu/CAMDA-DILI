@@ -20,11 +20,11 @@ Purpose: Generating MoSS SAs (moss_results.csv is outputted)
 Note: In "CSV Writer" node; please configure the output location as "GitHub/CAMDA-DILI/Substructural_Analysis/Data/moss_output.csv" directory
 
 (C) 
-Script: DILI_SUBSTRUCTURES_USE_ALL.ipynb
+Script: Generate_SARpy_substructures_and_evaluate_alongside_MoSS_and_Literature
 Purpose: Generating SARpy SAs, then concatenating with MoSS and literature (Liu et al. (2015)) to generate SA metrics e.g. precision and % coverage in DILI compounds (Structural_alerts.csv is outputted)
 
 (D)
-Script: DrugBank_Approved_Analysis.ipynb
+Script: DrugBank_Approved_Analysis_of_SAs
 Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4) (Structural_alerts_with_DrugBank.csv is outputted)
 
 (E)
