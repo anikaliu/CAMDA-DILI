@@ -15,15 +15,15 @@ ex_ECFP<-read.csv('../data/FDA_Validation_Set_Results/Predictions_ECFP4/ambiguou
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='ECFP')
-cv_MD<-read.csv('../data/Model_Results_Parameters/MD/cv_scores_MD.csv')%>%
+cv_MD<-read.csv('../data/Model_Results_Parameters/MD_newscaling/cv_scores_MD_newscaling.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='LOCO-CV', 'descriptor'='MD')
-ts_MD<-read.csv('../data/Model_Results_Parameters/MD/test_scores_MD.csv')%>%
+ts_MD<-read.csv('../data/Model_Results_Parameters/MD_newscaling/test_scores_MD_newscaling.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='MD')
-ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD/ambiguous_results.csv')%>%
+ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD_newscaling/ambiguous_results.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='MD')
@@ -90,7 +90,7 @@ plot_performance<-function(df_models, descriptor_oi){
 
 #Generate and save
 gg_ECFP<-plot_performance(df_models, descriptor_oi = 'ECFP')
-<<<<<<< HEAD
+#<<<<<<< HEAD
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 95, width=170, units="mm")
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.jpeg', height = 95, width=170, units="mm")
 
@@ -101,7 +101,7 @@ ggsave(gg_MD,filename = '../plots/MD_performance.jpeg', height = 95, width=170, 
 gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
 ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 95, width=170, units="mm")
 ggsave(gg_PT,filename = '../plots/PT_performance.jpeg', height = 95, width=170, units="mm")
-=======
+#=======
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.pdf', height = 4.5, width=8)
 ggsave(gg_ECFP,filename = '../plots/ECFP_performance.jpeg', height = 4.5, width=8)
 
@@ -112,4 +112,4 @@ ggsave(gg_MD,filename = '../plots/MD_performance.jpeg', height = 4.5, width=8)
 gg_PT<-plot_performance(df_models, descriptor_oi = 'PT')
 ggsave(gg_PT,filename = '../plots/PT_performance.pdf', height = 4.5, width=8)
 ggsave(gg_PT,filename = '../plots/PT_performance.jpeg', height = 4.5, width=8)
->>>>>>> ac80edffc2b1a4ab2d487f9a56360342e05270a1
+#>>>>>>> ac80edffc2b1a4ab2d487f9a56360342e05270a1
