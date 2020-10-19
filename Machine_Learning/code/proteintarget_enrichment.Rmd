@@ -10,24 +10,25 @@ library(ggrepel)
 library(ggExtra)
 library(RColorBrewer)
 library(matrixStats)
-library(ReactomePA)
+library(clusterProfiler)
 library(biomaRt)
+library(msigdbr)
 ```
 Load data.
 ```{r}
 df<-read.csv('../../Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous.csv')
-df_featimp<-read.csv('../data/Model_Results_Parameters/PT/featureimps_coeffs_pt.csv')
+df_featimp<-read.csv('../data/Model_Results_Parameters/PT/feature_importances_PT.csv')
 df_targetswinfo<-read.delim('../../Data_Processing/Target_Prediction/data/training_set_predicted_targets.txt')
 colnames(df_targetswinfo)<-str_extract(colnames(df_targetswinfo), pattern = '\\w+$')
 
-ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
-annotation <- getBM(attributes=c("uniprotswissprot","hgnc_symbol", 'entrezgene_id'),
-                    filters="uniprotswissprot",
-                    values=df_targetswinfo$Uniprot, 
-                    mart=ensembl)
-colnames(annotation)<-c('Uniprot','Symbol','entrez')
-write.csv(annotation, '../data/enrichment/ßßannotation_gene.csv')
-
+# ensembl = useMart("ensembl",dataset="hsapiens_gene_ensembl")
+# annotation <- getBM(attributes=c("uniprotswissprot","hgnc_symbol", 'entrezgene_id'),
+#                     filters="uniprotswissprot",
+#                     values=df_targetswinfo$Uniprot, 
+#                     mart=ensembl)
+# colnames(annotation)<-c('Uniprot','Symbol','entrez')
+# write.csv(annotation, '../data/enrichment/annotation_gene.csv')
+annotation=read.csv('../data/enrichment/annotation_gene.csv', row.names = 1)
 df_target<-df_targetswinfo[,-(1:16)]
 df_target[(df_target==NaN)]<-NA
 rownames(df_target)<-df_targetswinfo$Uniprot
@@ -54,7 +55,7 @@ runwilcoxon<-function(df_DILI, df_NoDILI, alternative="greater"){
 #Wrapper for running wilcoxon
 rundiliwilcoxon<-function(DILIclass=c('vMost-DILI-Concern'), NoDILIclass=c('vNo-DILI-Concern')){
 #Select DILI/NoDILI compounds
-  NoDILI_no<-df%>%filter(vDILIConcern %in% NoDILIclass)
+  NoDILI<-df%>%filter(vDILIConcern %in% NoDILIclass)
   df_NoDILI_pre<-as.data.frame(t(df_target[,which(colnames(df_target) %in% NoDILI$PubChem_CID)]))
   DILI<-df%>%filter(vDILIConcern %in% DILIclass)
   df_DILI_pre<-as.data.frame(t(df_target[,which(colnames(df_target) %in% DILI$PubChem_CID)]))
@@ -93,8 +94,6 @@ df_plotting$label[which(df_plotting$mcnc>0.05)]<-NA
 df_plotting$`Enrichment in DILI compounds`<-ifelse(df_plotting$mcnc<0.05,'Significant', 'Insignificant')
 df_plotting<-df_plotting[order(df_plotting$mcnc),]
 df_plotting$Uniprot<-factor(df_plotting$Uniprot, levels=rev(unique(df_plotting$Uniprot)))
-df_DILI_wilcox<-df_DILI[which(colnames(df_DILI) %in% allfeat$Uniprot)]
-df_NoDILI_wilcox<-df_NoDILI[which(colnames(df_NoDILI) %in% allfeat$Uniprot)]
 
 p <- ggplot(df_plotting, aes(RF_mcnc, (SVM_mcnc), label=label)) +
   geom_point(data=subset(df_plotting,mcnc>0.05),alpha=0.5, color='#008EA0FF' )+ 
@@ -110,22 +109,40 @@ ggsave(filename = '../plots/featureimportance_RF_vs_SVM.pdf', g, width = 4.5, he
 ```
 Run enrichment analysis.
 ```{r}
+    
+hallmark = msigdbr(species = "Homo sapiens",category = 'H')
+canonical_reactome = msigdbr(species = "Homo sapiens",category = 'C2', subcategory = 'CP:REACTOME')
+canonical_wikipathways = msigdbr(species = "Homo sapiens",category = 'C2', subcategory = 'CP:WIKIPATHWAYS')
+canonical_kegg = msigdbr(species = "Homo sapiens",category = 'C2', subcategory = 'CP:KEGG')
+msigdbr_df<-bind_rows(canonical_kegg, canonical_reactome)%>%bind_rows(canonical_wikipathways)
+msigdbr_t2g = msigdbr_df %>% dplyr::select(gs_name, entrez_gene) %>% as.data.frame()
+canonical_wikipathways_t2g = canonical_wikipathways %>% dplyr::select(gs_name, entrez_gene) %>% as.data.frame()
+canonical_reactome_t2g = canonical_reactome %>% dplyr::select(gs_name, entrez_gene) %>% as.data.frame()
+
 for(index in 2:ncol(df_featimp)){
     df_enrichment<-data.frame()
     name<-colnames(df_featimp)[index]
-    print(name)
-    if (str_detect(name, pattern='SVM')){screenlist<-seq(0.07,0.5,0.01)}
-    if (str_detect(name, pattern='RF')){screenlist<-seq(0.0007,0.004,0.0001)}
-    if (str_detect(name, pattern='mclcnc')){wilcox<-df_plotting$mclcnc}
-    if (str_detect(name, pattern='mcnc')){wilcox<-df_plotting$mcnc}
-    if (str_detect(name, pattern='mclcnc')){wilcox<-df_plotting$mcnc}
-    
-    for (t in screenlist) {
-      gene_oi=df_plotting$Uniprot[which(abs(df_plotting[,which(colnames(df_plotting)==name)])>t& wilcox<0.05)] 
+
+screenlist=quantile(df_sig[,which(colnames(df_sig)==name)], probs=seq(0.9,1, 0.005))
+  for (prob in seq(0.905,1, 0.005)) {
+      t=quantile(df_sig[,which(colnames(df_sig)==name)], probs=prob)
+      if(str_detect(name, pattern='SVM')){
+            gene_oi=df_sig$Uniprot[which((df_sig[,which(colnames(df_plotting)==name)])>t)] 
+      }
+      if(str_detect(name, pattern='RF')){
+            gene_oi=df_sig$Uniprot[which((df_sig[,which(colnames(df_sig)==name)])>t)] 
+      }
     if(length(gene_oi)>0){
-      x <- enrichPathway(gene=as.character(unique(df_plotting$entrez[which(df_plotting$Uniprot %in% gene_oi)])),pvalueCutoff=0.05,organism='human', pAdjustMethod = 'fdr', readable=T, universe = as.character(unique(df_plotting$entrez)),minGSSize = 10)
+      
+      x <- enricher(gene=as.character(unique(df_sig$entrez[
+        which(df_sig$Uniprot %in% gene_oi)])), 
+                    TERM2GENE = msigdbr_t2g,
+                    pvalueCutoff=0.05,
+        pAdjustMethod = 'BH',
+        universe = as.character(unique(df_plotting$entrez)),
+        minGSSize = 10)
      result<-x@result%>%dplyr::select(ID, p.adjust,Description)
-     colnames(result)[which(colnames(result)=='p.adjust')]<-t
+     colnames(result)[which(colnames(result)=='p.adjust')]<-prob
      if (ncol(df_enrichment)==0){
        df_enrichment<-result
        }else{
@@ -137,23 +154,38 @@ for(index in 2:ncol(df_featimp)){
   write.csv(df_enrichment, paste0('../data/enrichment/',name,'.csv'), row.names = F)
 }
 ```
+```{r}
+df_plotting$wilcox=wilcox
+df_sig<-df_plotting%>%filter(wilcox<0.05)
+
+df_sig$ecdf_SVMmcnc=(ecdf(df_plotting$SVM_mcnc))
+df_threshold=df_plotting%>%filter(`Enrichment in DILI compounds`=='Significant')%>%dplyr::select(SVM_mcnc,RF_mcnc)%>%
+  pivot_longer(names_to = 'model', values_to='importance',cols=c('SVM_mcnc','RF_mcnc'))
+
+
+ggplot(df_threshold, aes(importance, color=model))+
+  stat_ecdf()+
+  facet_wrap(~model, scales = 'free')+
+  theme_bw()+
+  ylim(0.9,1)
+```
 
 Generate SI figures on enrichment over diferent thresholds.
 ```{r}
 #RF_mcnc
-for (index in 2:7){
-  name<-colnames(df_featimp)[index]
+#for (index in 2:7){
+for (name in c('RF_mcnc','SVM_mcnc')){
+#  name<-colnames(df_featimp)[index]
   df_enrichment<-read.csv(paste0('../data/enrichment/',name,'.csv'), check.names = F)
   t<-setdiff(colnames(df_enrichment),c('ID', 'Description'))
-  t_select<-t[which(as.numeric(t)%%0.02==0)]
-  significant<-df_enrichment[,which(!(colnames(df_enrichment)%in% t_select))]
-  significant<-significant%>%filter(rowMins(as.matrix(df_enrichment%>%dplyr::select(-ID, -Description)), na.rm=T)<0.05)
+
+  significant<-df_enrichment%>%filter(rowMins(as.matrix(df_enrichment%>%dplyr::select(-ID, -Description)), na.rm=T)<0.05)
   
   if(nrow(significant)>2){
     p_sig<-significant%>%column_to_rownames('Description')%>%dplyr::select(-ID)
     p_sig<-p_sig[,which(colMins(as.matrix(p_sig), na.rm=T)<0.05)] #A lot of columns without any significant result!
    p_sig<-p_sig[which(rowMins(as.matrix(p_sig), na.rm=T)<0.05),] #A
-  pheatmap<-pheatmap((-log10(p_sig)), 
+  pheatmap<-pheatmap((-log10(p_sig)), border_color='white',
          cluster_cols=F,
          show_rownames=T,
          na_col='white',
@@ -161,78 +193,82 @@ for (index in 2:7){
         color =  c('grey',(colorRampPalette((brewer.pal(n = 7, name =
   "YlOrRd")))(100))), 
      breaks = c(0,seq(-log10(0.05),-log10(min(p_sig, na.rm=T)),by=((-log10(min(p_sig, na.rm = T))+log10(0.05))/100))))
-  ggsave(pheatmap, filename=paste0('../plots/enrichment_',name,'.pdf'), height = 9, width = 11)
+  ggsave(pheatmap, filename=paste0('../plots/enrichment_',name,'.pdf'), height = 20, width = 20)
   }
 }
 ```
 Prepare for cytoscape
 ```{r}
-gene_oi=df_plotting$Uniprot[which(abs(df_plotting[,which(colnames(df_plotting)=='RF_mcnc')])>0.0018& wilcox<0.05)] 
-x_RF <- enrichPathway(gene=as.character(unique(df_plotting$entrez[which(df_plotting$Uniprot %in% gene_oi)])),
-                      pvalueCutoff=0.05,organism='human', 
-                      pAdjustMethod = 'fdr', 
-                      readable=T, 
-                      universe = as.character(unique(df_plotting$entrez)),
-                      minGSSize = 10)
-
-gene_oi=df_plotting$Uniprot[which(abs(df_plotting[,which(colnames(df_plotting)=='SVM_mcnc')])>0.23& wilcox<0.05)] 
-x_SVM <- enrichPathway(gene=as.character(unique(df_plotting$entrez[which(df_plotting$Uniprot %in% gene_oi)])),
+t=quantile(df_sig[,which(colnames(df_sig)=='RF_mcnc')], probs=0.97)
+gene_oi=df_sig$Uniprot[which((df_sig[,which(colnames(df_plotting)=='RF_mcnc')])>t)] 
+x_RF <- enricher(gene=as.character(unique(df_sig$entrez[
+        which(df_sig$Uniprot %in% gene_oi)])), 
+                    TERM2GENE = msigdbr_t2g,
+                    pvalueCutoff=0.05,
+        pAdjustMethod = 'BH',
+        universe = as.character(unique(df_plotting$entrez)),
+        minGSSize = 10)
+t=quantile(df_sig[,which(colnames(df_sig)=='SVM_mcnc')], probs=0.97)
+gene_oi=df_plotting$Uniprot[which((df_sig[,which(colnames(df_sig)=='SVM_mcnc')])>t)] 
+x_SVM <- enricher(gene=as.character(unique(df_sig$entrez[which(df_sig$Uniprot %in% gene_oi)])),
                        pvalueCutoff=0.05,
-                       organism='human', 
-                       pAdjustMethod = 'fdr', 
-                       readable=T, 
+                       pAdjustMethod = 'BH', 
+                      TERM2GENE = msigdbr_t2g,
                        universe = as.character(unique(df_plotting$entrez)),
                        minGSSize = 10)
 
-#Prepare for cytoscape figure
-r_RF<-x_RF@result%>%
-  filter(p.adjust<0.05)%>%
-  dplyr::select(Description, geneID, p.adjust)%>%
-  separate_rows(geneID, sep='/')%>%
-  mutate('Method'='RF')
-
-r_SVM<-x_SVM@result%>%
-  filter(p.adjust<0.05)%>%
-  dplyr::select(Description, geneID, p.adjust)%>%
-  separate_rows(geneID, sep='/')%>%
-  mutate('Method'='SVM')
-
-results_nodes<-rbind(r_RF,r_SVM)
-write.csv(results_nodes, '../data/enrichment/topinteractions_cytoscape.csv', quote = F)
 
 #Prepare for SI table
 r_RF<-x_RF@result%>%
   filter(p.adjust<0.05)%>%
-  dplyr::select(ID,Description,GeneRatio,BgRatio, p.adjust)%>%
-  mutate('RF_padj'=p.adjust)%>%
-  mutate('RF_GeneRatio'=GeneRatio)%>%
-  dplyr::select(-GeneRatio, -BgRatio, -p.adjust)
+  dplyr::select(ID,Description,GeneRatio,BgRatio, p.adjust,geneID)
 
 r_SVM<-x_SVM@result%>%
   filter(p.adjust<0.05)%>%
-  dplyr::select(ID,Description,GeneRatio,BgRatio, p.adjust)%>%
-  mutate('SVM_padj'=p.adjust)%>%
-  mutate('SVM_GeneRatio'=GeneRatio)%>%
-  dplyr::select(-GeneRatio, -BgRatio, -p.adjust)
+  dplyr::select(ID,Description,GeneRatio,BgRatio, p.adjust,geneID)
 
-r3<-full_join(r_RF,r_SVM, by=c('Description','ID'))
+r3<-full_join(r_RF%>%
+                mutate('RF_padj'=p.adjust)%>%
+                mutate('RF_GeneRatio'=GeneRatio)%>%
+                dplyr::select(-GeneRatio, -BgRatio, -p.adjust),
+              r_SVM%>%
+                mutate('SVM_padj'=p.adjust)%>%
+                mutate('SVM_GeneRatio'=GeneRatio)%>%
+                dplyr::select(-GeneRatio, -BgRatio, -p.adjust))%>%
+  separate(ID, into = c('Database', 'Pathway'), sep = '_',extra = 'merge')%>%
+  mutate(Pathway=gsub(Pathway, pattern = '_', replacement = ' '))%>%
+  mutate(Pathway=ifelse(str_detect(Pathway, 'P450'), 'CYTOCHROME P450',ifelse(str_detect(Pathway, 'PHASE|OXIDATION'), 'BIOTRANSFORMATION', Pathway )))%>%
+  arrange(Pathway)
 write.csv(r3, '../data/enrichment/SI_table_pathways.csv', quote = F)
+#Prepare for cytoscape figure
+results_nodes<-rbind(r_RF%>%mutate(method='RF'),r_SVM%>%mutate(method='SVM'))%>%
+  separate_rows(geneID, sep='/')%>%
+  mutate('entrez'=as.numeric(geneID))%>%
+  left_join(annotation)%>%
+  separate(ID, into = c('Database', 'Pathway'), sep = '_',extra = 'merge')%>%
+  mutate(Pathway=gsub(Pathway, pattern = '_', replacement = ' '))%>%
+  mutate(Pathway=ifelse(str_detect(Pathway, 'P450'), 'CYTOCHROME P450',ifelse(str_detect(Pathway, 'PHASE|OXIDATION'), 'BIOTRANSFORMATION', Pathway )))%>%
+  arrange(Pathway)
+write.csv(results_nodes, '../data/enrichment/topinteractions_cytoscape_wikipathways_reactome.csv', quote = F)
 
 #Prepare node information for cytoscape
-nodes_pathways<-data.frame('nodes'=unique(results_nodes$Description))
-nodes_pathways$pathway_annot<-ifelse(nodes_pathways$nodes %in% r_RF$Description, 
-                     ifelse(nodes_pathways$nodes %in% r_SVM$Description, 'SVM|RF', 'RF'),
-                     'SVM')
+nodes_pathways<-data.frame('nodes'=unique(results_nodes$Pathway))
+nodes_pathways$pathway_annot<-ifelse((nodes_pathways$nodes %in% results_nodes$Pathway[which(results_nodes$method=='RF')]&nodes_pathways$nodes %in% results_nodes$Pathway[which(results_nodes$method=='SVM')]), 'SVM|RF',ifelse(nodes_pathways$nodes %in% results_nodes$Pathway[which(results_nodes$method=='SVM')], 'SVM', 'RF'))
 
-nodes_genes<-data.frame('nodes'=unique(results_nodes$geneID))
-nodes_genes$gene_annot<-ifelse(nodes_genes$nodes %in% r_RF$geneID, 
-                     ifelse(nodes_genes$nodes %in% r_SVM$geneID, 'SVM|RF', 'RF'),
-                     'SVM')
+nodes_genes<-results_nodes%>%dplyr::select(Symbol, entrez)%>%
+  mutate('gene_RF'=ifelse(Symbol %in% results_nodes$Symbol[which(results_nodes$method=='RF')], T,F),
+         'gene_SVM'=ifelse(Symbol %in% results_nodes$Symbol[which(results_nodes$method=='SVM')], T,F),
+         'nodes'=Symbol)%>%
+  mutate(gene_annot=ifelse(gene_RF&gene_SVM, 'SVM|RF', ifelse(gene_SVM, 'SVM', 'RF')))%>%
+  dplyr::select(nodes, gene_annot)
+
 nodes<-full_join(nodes_genes,nodes_pathways)
 write.csv(nodes, '../data/enrichment/topnodes_cytoscape.csv', quote = F)
 
 
-SI_table<-allfeat%>%inner_join(df_featimp)%>%left_join(df_targetinfo)%>%filter(RF_mcnc>0.0018|SVM_mcnc>0.23)%>%filter(mcnc<0.05)%>%dplyr::select(Symbol,Name, Protein_Classification, RF_mcnc, SVM_mcnc)
+SI_table<-allfeat%>%filter(Uniprot %in%df_sig$Uniprot)%>%inner_join(df_featimp)%>%left_join(df_targetinfo)%>%
+  filter(RF_mcnc>quantile(df_sig[,which(colnames(df_sig)=='RF_mcnc')], probs=0.97)|
+           SVM_mcnc>quantile(df_sig[,which(colnames(df_sig)=='SVM_mcnc')], probs=0.97))%>%filter(mcnc<0.05)%>%dplyr::select(Symbol,Name, Protein_Classification, RF_mcnc, SVM_mcnc)
 write.csv(SI_table, '../data/enrichment/SI_table_genes.csv', quote = F, row.names = F)
 ```
 
