@@ -230,11 +230,11 @@ r_SVM<-x_SVM@result%>%
 r3<-full_join(r_RF%>%
                 mutate('RF_padj'=p.adjust)%>%
                 mutate('RF_GeneRatio'=GeneRatio)%>%
-                dplyr::select(-GeneRatio, -BgRatio, -p.adjust),
+                dplyr::select(-GeneRatio, -BgRatio, -p.adjust, -geneID),
               r_SVM%>%
                 mutate('SVM_padj'=p.adjust)%>%
                 mutate('SVM_GeneRatio'=GeneRatio)%>%
-                dplyr::select(-GeneRatio, -BgRatio, -p.adjust))%>%
+                dplyr::select(-GeneRatio, -BgRatio, -p.adjust, -geneID))%>%
   separate(ID, into = c('Database', 'Pathway'), sep = '_',extra = 'merge')%>%
   mutate(Pathway=gsub(Pathway, pattern = '_', replacement = ' '))%>%
   mutate(Pathway=ifelse(str_detect(Pathway, 'P450'), 'CYTOCHROME P450',ifelse(str_detect(Pathway, 'PHASE|OXIDATION'), 'BIOTRANSFORMATION', Pathway )))%>%
