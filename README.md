@@ -4,7 +4,7 @@ Anika Liu, Moritz Walter, Peter Wright et al. Prediction and mechanistic analysi
 
 Code and instructions for to reproduce the corresponding manuscript methods sub-sections are as follows:
 
-* 'Data Preparation': All code and instructions required to reproduce the results of these sections can be found in the GitHub repository subfolder 'Data_Processing'
-* 'Model Generation': All code and instructions required to reproduce the results of these sections can be found in the GitHub repository subfolder 'Machine_Learning'
-* 'Interpretation of Protein Targets': All code and instructions required to reproduce the results of these sections can be found in the GitHub repository subfolder 'Machine_Learning'
-* 'Structural Alerts': All code and instructions required to reproduce the results of these sections can be found in the GitHub repository subfolder 'Substructural Analysis'
+* 'Data Preparation': All code and instructions required to reproduce the results of this section can be found in the GitHub repository subfolder 'Data_Processing'
+* 'Model Generation': All code and instructions required to reproduce the results of this section can be found in the GitHub repository subfolder 'Machine_Learning'
+* 'Interpretation of Protein Targets': All code and instructions required to reproduce the results of this section can be found in the GitHub repository subfolder 'Machine_Learning'
+* 'Structural Alerts': All code and instructions required to reproduce the results of this section can be found in the GitHub repository subfolder 'Substructural Analysis'
