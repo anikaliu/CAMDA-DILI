@@ -1,6 +1,9 @@
 ---
 title: "R Notebook"
-output: html_notebook
+author: "Anika Liu (al862@cam.ac.uk)"
+output:
+  html_document:
+    df_print: paged
 ---
 Load libraries.
 ```{r}
@@ -95,6 +98,8 @@ df_plotting$`Enrichment in DILI compounds`<-ifelse(df_plotting$mcnc<0.05,'Signif
 df_plotting<-df_plotting[order(df_plotting$mcnc),]
 df_plotting$Uniprot<-factor(df_plotting$Uniprot, levels=rev(unique(df_plotting$Uniprot)))
 
+df_sig=df_plotting%>%filter(mcnc<0.05)
+
 p <- ggplot(df_plotting, aes(RF_mcnc, (SVM_mcnc), label=label)) +
   geom_point(data=subset(df_plotting,mcnc>0.05),alpha=0.5, color='#008EA0FF' )+ 
   geom_point(data=subset(df_plotting,mcnc<0.05), alpha=0.5, color='#FF6F00FF' )+ 
@@ -154,21 +159,7 @@ screenlist=quantile(df_sig[,which(colnames(df_sig)==name)], probs=seq(0.9,1, 0.0
   write.csv(df_enrichment, paste0('../data/enrichment/',name,'.csv'), row.names = F)
 }
 ```
-```{r}
-df_plotting$wilcox=wilcox
-df_sig<-df_plotting%>%filter(wilcox<0.05)
 
-df_sig$ecdf_SVMmcnc=(ecdf(df_plotting$SVM_mcnc))
-df_threshold=df_plotting%>%filter(`Enrichment in DILI compounds`=='Significant')%>%dplyr::select(SVM_mcnc,RF_mcnc)%>%
-  pivot_longer(names_to = 'model', values_to='importance',cols=c('SVM_mcnc','RF_mcnc'))
-
-
-ggplot(df_threshold, aes(importance, color=model))+
-  stat_ecdf()+
-  facet_wrap(~model, scales = 'free')+
-  theme_bw()+
-  ylim(0.9,1)
-```
 
 Generate SI figures on enrichment over diferent thresholds.
 ```{r}
