@@ -18,7 +18,7 @@ Purpose: do hyperparameter optimisation and prediction for the internal test set
 
 (D)
 Script: loocv_best_model.py
-Purpose: do the Leave-one-out-cross-validation experiment for the best model (SVM, ECFP, MostConcern + NoConcern)
+Purpose: do the Leave-one-out-cross-validation experiment for the best model (SVM, ECFP, -vMostConcern + -vNoConcern)
 
 (E)
 Script: generate_plots_loocv.py
