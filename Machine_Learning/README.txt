@@ -22,4 +22,8 @@ Purpose: do the Leave-one-out-cross-validation experiment for the best model (SV
 
 (E)
 Script: generate_plots_loocv.py
-Purpose: gnereate plots for Figure 2a.
+Purpose: genereate plot for Figure 2a.
+
+(F)
+Script: similarity_plots.py
+Purpose: generate plot for Figure 2b.
