@@ -16,7 +16,8 @@ load(file = "../data/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda")
 Comp_GC = read.csv("../data/GexClinical_pertiname.csv") # Load comps with gene exp and clinical data
 
 cdesc<-gct@cdesc
-
+write_csv("../data/GEXP_cdesc.csv", x = cdesc)
+cdesc = read.csv("../data/GEXP_cdesc.csv")
 
 
 # (1) Check Cell line data for comps with other data
