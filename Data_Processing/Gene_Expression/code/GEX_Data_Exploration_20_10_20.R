@@ -85,7 +85,7 @@ for (index in 1:nrow(conditions)){
   cond<-conditions[index,]
   id_interest<-GE_data_GC%>%right_join(cond) # should be GE_data_GC
   id_col<-id_interest$id
-  replicates<-GE_data_GC_mat%>%select(id_col) # should be GE_data_GC_mat
+  replicates<-GE_data_GC_mat%>%select(id_col) # should be GE_data_GC_mat ####AL Does GE_data_GC_mat have a column called id_col? Either selecting here doesn't work or the conversion matrix below doesn't
   
   if (ncol(replicates)>1){
     signature<-modzs(as.matrix(replicates))
@@ -99,8 +99,8 @@ for (index in 1:nrow(conditions)){
 
 # Collapsed to only landmark genes
 dftest = df
-rownames(dftest) = rownames(df$A375_6_10.0_alaproclate)
-dftest <- dftest[rownames(dftest) %in% gene_info$pr_gene_id, ] # Landmark genes only
+rownames(dftest) = rownames(df$A375_6_10.0_alaproclate) ####AL column shouldn't have rownames
+dftest <- dftest[rownames(dftest) %in% gene_info$pr_gene_id, ] # Landmark genes only #########AL This might select the wrong rows
 aa = gene_info[match(rownames(dftest),gene_info$pr_gene_id ),2] # mapping to gene symbol
 
 rownames(dftest)= aa
