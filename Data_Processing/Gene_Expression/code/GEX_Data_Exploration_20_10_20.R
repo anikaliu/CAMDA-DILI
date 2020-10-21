@@ -10,16 +10,14 @@ library("dplyr")
   }
 }
 
-load(file = "../data/l1000_1314pert_inames.872matchedBROAD_ids-dilirank.rda")
-broad_id_map = drank.sel
-write_csv("../data/l1000_1314pert_inames.872matchedBROAD_ids.csv", x = broad_id_map)
+#load(file = "../data/l1000_1314pert_inames.872matchedBROAD_ids-dilirank.rda")
+#broad_id_map = drank.sel
+#write_csv("../data/l1000_1314pert_inames.872matchedBROAD_ids.csv", x = broad_id_map)
 
 
 load(file = "../data/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda")
 load(file = "../data/CAMDA_l1000_1314compounds-dilirank.v2.rda")
-#write_csv("../data/GEX_metadata.csv", x = drank.sel)
 
-#Comp_GC = read.csv("../data/GexClinical_pertiname.csv") # Load comps with gene exp and clinical data
 Comp_GC = drank.sel
 
 cdesc<-gct@cdesc
