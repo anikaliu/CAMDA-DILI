@@ -32,21 +32,20 @@ lol_GC<-data_GC%>%
   select(pert_iname,cell_id,pert_dose,pert_time)%>%
   unique()%>%
   group_by(cell_id, pert_dose, pert_time)%>%
-  summarise(n=n())
+  summarise(n=n())%>%
+  arrange(n)%>%
+  ungroup()%>%
+  filter(n==max(n))
 
-lol_GC = lol_GC[lol_GC$n == 233,] # Cell+dose+time contain data for all compounds with GX + Clinical
-
-ggplot(lol_GC)+
-  geom_point(aes(x=n, y=cell_id+pert_dose+pert_time)) + ggtitle("Cell line data points for compounds with Gene Exp and Image Data")
 
 # (2) Parse dataset for cell+dose+time conditions with data for all compounds
 
 GE_data_GC = cdesc %>% inner_join(lol_GC, by=c("cell_id","pert_dose","pert_time")) # get full mat cell lines
 GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$x,] # get data only for comps with clinical data
 
-length(unique(GE_data_GC$pert_iname))
+#length(unique(GE_data_GC$pert_iname))
 
-GE_data_GC %>% count(pert_iname,cell_id,pert_dose,pert_time)
+#GE_data_GC %>% count(pert_iname,cell_id,pert_dose,pert_time)
 
 # (3) Weighted co-correlation of replicate signatures
 # https://stackoverflow.com/questions/45532058/subsetting-a-matrix-on-the-basis-of-a-list-of-some-of-the-column-names
