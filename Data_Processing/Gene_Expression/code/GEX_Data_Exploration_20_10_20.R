@@ -10,10 +10,15 @@ library("dplyr")
   }
 }
 
-#load(file.choose()) # Load ALL GENE EXP DATA - is file './CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda'
-load(file = "../data/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda")
+#load(file = "../data/l1000_1314pert_inames.872matchedBROAD_ids-dilirank.rda")
+#broad_id_map = drank.sel
+#write_csv("../data/l1000_1314pert_inames.872matchedBROAD_ids.csv", x = broad_id_map)
 
-Comp_GC = read.csv("../data/GexClinical_pertiname.csv") # Load comps with gene exp and clinical data
+
+load(file = "../data/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda")
+load(file = "../data/CAMDA_l1000_1314compounds-dilirank.v2.rda")
+
+Comp_GC = drank.sel
 
 cdesc<-gct@cdesc
 write_csv("../data/GEXP_cdesc.csv", x = cdesc)
@@ -25,7 +30,7 @@ sum_cp<-cdesc%>%
   select(pert_iname,cell_id,pert_dose,pert_time)%>%
   unique()
 
-data_GC = sum_cp[sum_cp$pert_iname %in% Comp_GC$x,] # unique comp-cell-dose-time with GC data
+data_GC = sum_cp[sum_cp$pert_iname %in% Comp_GC$Compound.Name,] # unique comp-cell-dose-time with GC data
 
 
 lol_GC<-data_GC%>%
@@ -41,7 +46,7 @@ lol_GC<-data_GC%>%
 # (2) Parse dataset for cell+dose+time conditions with data for all compounds
 
 GE_data_GC = cdesc %>% inner_join(lol_GC, by=c("cell_id","pert_dose","pert_time")) # get full mat cell lines
-GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$x,] # get data only for comps with clinical data
+GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$Compound.Name,] # get data only for comps with clinical data
 
 #length(unique(GE_data_GC$pert_iname))
 

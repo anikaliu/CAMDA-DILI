@@ -8,7 +8,7 @@ Additionally to replicate the SARpy implementation the following files need to b
 SARpy.py, SARpy.pyc, SARpytools.py, SARpytools.pyc
 
 (2)
-File order - base file is "standardized_compounds_incl_ambiguous.csv" (output of CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/code/Standardisation_filtering.py). Additionally the file "DrugBank_5_1_4_approved.csv" (in CAMDA-DILI/Data_Processing/DrugBank) is required for step (D)
+File order - base file is "standardized_compounds_incl_ambiguous.csv" (output of CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/code/Standardisation_filtering.py). The base file for Drugbank compounds is "DrugBank_5_1_4_approved.csv" (in CAMDA-DILI/Substructural_Analysis/data) is required for step (D), and is obtained by unzipping "drugbank_approved_structure_links.csv.zip" (Approved compounds from drug bank version 5.1.4 downloaded directly from https://www.drugbank.com/) and renaming. 
 
 (A) 
 Script: Prepare_DILI_Dataset_for_SARpy_and_MoSS.ipynb
@@ -25,7 +25,7 @@ Purpose: Generating SARpy SAs, then concatenating with MoSS and literature (Liu 
 
 (D)
 Script: DrugBank_Approved_Analysis_of_SAs
-Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4) (Structural_alerts_with_DrugBank.csv is outputted)
+Purpose: Check prescence of all SA in DrugBank v 5.1.4 compounds (standardised in-script) and concatenate with other metrics  (used for Tables 2, and S4).(Structural_alerts_with_DrugBank.csv is outputted)
 
 (E)
 Script: Combined_Plot.R
