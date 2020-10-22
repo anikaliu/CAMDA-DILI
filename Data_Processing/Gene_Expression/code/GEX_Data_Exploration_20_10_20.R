@@ -59,12 +59,13 @@ write_csv("../data/GEXP_comps_and_conditions_with_GEXP.csv", x = GE_data_GC)
 GE_data_GC_mat = as.data.frame(gct@mat) %>% select(one_of(GE_data_GC$id))
 
 
+# Get only landmark genes 
+gene_info <- read.csv("../data/GSE70138_Broad_LINCS_gene_info_2017-03-06.txt", sep = '\t')
+gene_info <- gene_info[gene_info$pr_is_lm == 1,]
+
+
 save.image(file='GEX_Data_Exploration_20_10_20_until_GE_data_GC_mat.RData')
 
-
-# Get only landmark genes 
-gene_info <- read.csv("GSE70138_Broad_LINCS_gene_info_2017-03-06.txt", sep = '\t')
-gene_info <- gene_info[gene_info$pr_is_lm == 1,]
 
 GE_data_GC_landmark_non_collapsed <- GE_data_GC_mat[rownames(GE_data_GC_mat) %in% gene_info$pr_gene_id, ] # Landmark genes only)
 
