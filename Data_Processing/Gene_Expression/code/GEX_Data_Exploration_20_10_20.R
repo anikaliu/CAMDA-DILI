@@ -48,6 +48,8 @@ lol_GC<-data_GC%>%
 GE_data_GC = cdesc %>% inner_join(lol_GC, by=c("cell_id","pert_dose","pert_time")) # get full mat cell lines
 GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$Compound.Name,] # get data only for comps with clinical data
 
+write_csv("../data/GEXP_comps_and_conditions_with_GEXP.csv", x = GE_data_GC)
+
 #length(unique(GE_data_GC$pert_iname))
 
 #GE_data_GC %>% count(pert_iname,cell_id,pert_dose,pert_time)
@@ -55,6 +57,10 @@ GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$Compound.Name,] # get
 # (3) Weighted co-correlation of replicate signatures
 # https://stackoverflow.com/questions/45532058/subsetting-a-matrix-on-the-basis-of-a-list-of-some-of-the-column-names
 GE_data_GC_mat = as.data.frame(gct@mat) %>% select(one_of(GE_data_GC$id))
+
+
+save.image(file='GEX_Data_Exploration_20_10_20_until_GE_data_GC_mat.RData')
+
 
 # Get only landmark genes 
 gene_info <- read.csv("GSE70138_Broad_LINCS_gene_info_2017-03-06.txt", sep = '\t')
