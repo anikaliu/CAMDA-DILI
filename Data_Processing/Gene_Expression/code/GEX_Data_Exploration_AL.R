@@ -48,6 +48,8 @@ lol_GC<-data_GC%>%
 GE_data_GC = cdesc %>% inner_join(lol_GC, by=c("cell_id","pert_dose","pert_time")) # get full mat cell lines
 GE_data_GC = GE_data_GC[GE_data_GC$pert_iname %in% Comp_GC$Compound.Name,] # get data only for comps with clinical data
 
+metadata=inner_join(GE_data_GC, drank.sel)
+write.csv(metadata,'../data/LINCS_DILI_metadata.csv')
 #length(unique(GE_data_GC$pert_iname))
 
 #GE_data_GC %>% count(pert_iname,cell_id,pert_dose,pert_time)
