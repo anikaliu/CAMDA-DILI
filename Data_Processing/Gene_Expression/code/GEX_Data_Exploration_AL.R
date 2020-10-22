@@ -67,7 +67,7 @@ gene_info <- gene_info[gene_info$pr_is_lm == 1,]
 genesymbols = gene_info[match(rownames(GE_data_GC_landmark_non_collapsed),gene_info$pr_gene_id ),2] # mapping to gene symbol
 rownames(GE_data_GC_landmark_non_collapsed) = genesymbols
 GE_data_GC_landmark_non_collapsed$id = genesymbols
-write_csv("../data/CAMDA_Model_Data/L1000_Data_uncollapsed_all_conditionsv2_new.csv", x = GE_data_GC_landmark_non_collapsed)
+write_csv("../data/L1000_Data_uncollapsed_all_conditionsv2_new.csv", x = GE_data_GC_landmark_non_collapsed)
 
 
 # # Find replicate columns - loop over do weighted sum, save into new column and replace old replicates
