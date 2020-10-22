@@ -21,8 +21,8 @@ load(file = "../data/CAMDA_l1000_1314compounds-dilirank.v2.rda")
 Comp_GC = drank.sel
 
 cdesc<-gct@cdesc
-write_csv("../data/GEXP_cdesc.csv", x = cdesc)
-cdesc = read.csv("../data/GEXP_cdesc.csv")
+#write_csv("../data/GEXP_cdesc.csv", x = cdesc)
+#cdesc = read.csv("../data/GEXP_cdesc.csv")
 
 
 # (1) Check Cell line data for comps with other data
@@ -58,12 +58,15 @@ write.csv(metadata,'../data/LINCS_DILI_metadata.csv')
 # https://stackoverflow.com/questions/45532058/subsetting-a-matrix-on-the-basis-of-a-list-of-some-of-the-column-names
 GE_data_GC_mat = as.data.frame(gct@mat) %>% select(one_of(GE_data_GC$id))
 
+
+#Map gene ID to gene
+gene_info <- read.csv("../data/GSE70138_Broad_LINCS_gene_info_2017-03-06.txt", sep = '\t') ## PW moved
+gene_info <- gene_info[gene_info$pr_is_lm == 1,] ## PW moved
+
 # Get only landmark genes
 GE_data_GC_landmark_non_collapsed <- GE_data_GC_mat[rownames(GE_data_GC_mat) %in% gene_info$pr_gene_id, ] # Landmark genes only)
 
-#Map gene ID to gene
-gene_info <- read.csv("GSE70138_Broad_LINCS_gene_info_2017-03-06.txt", sep = '\t')
-gene_info <- gene_info[gene_info$pr_is_lm == 1,]
+
 genesymbols = gene_info[match(rownames(GE_data_GC_landmark_non_collapsed),gene_info$pr_gene_id ),2] # mapping to gene symbol
 rownames(GE_data_GC_landmark_non_collapsed) = genesymbols
 GE_data_GC_landmark_non_collapsed$id = genesymbols
