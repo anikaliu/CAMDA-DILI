@@ -23,8 +23,8 @@ ts<-read.csv('~/Downloads/OneDrive_1_10-11-2020/MCNC_ts_scores_GEX_yscr.csv')%>%
 
 df_performance<-rbind(cv,ts)%>%
   mutate(dataset='MCNC')%>%
-  mutate(condition=ifelse(cell_line=='All_Cell_Lines','All cell lines',paste0(cell_line,' (',time,'h, ', dose,' uM)')))%>%
-  mutate(condition=factor(condition, levels=c('All cell lines', unique(df_performance$condition))))%>%
+  mutate(condition=ifelse(cell_line=='All_Cell_Lines','All cell lines',paste0(cell_line,' (',time,' h, ', dose,' uM)')))%>%
+  mutate(condition=factor(condition, levels=unique(c('All cell lines', unique(condition)))))%>%
   dplyr::select(condition, balanced_accuracy,dataset,testset,true_or_y_scrambled_labels_used)%>%
   mutate(balanced_accuracy=as.numeric(balanced_accuracy))
 
@@ -44,13 +44,13 @@ df_models<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)
 df_scrambledmedians<-df_performance%>%
   filter(true_or_y_scrambled_labels_used !=1)%>%
-  group_by(condition, dataset, testset, dataset_readable)%>%summarise("median_balacc"=median(balanced_accuracy))%>%mutate('scrambled'="Scrambled performance")
+  group_by(condition, dataset, testset, dataset_readable)%>%summarise("median_balacc"=median(balanced_accuracy, na.rm=T))%>%mutate('scrambled'="Scrambled performance")
 df_standardmeans<-df_performance%>%
   filter(true_or_y_scrambled_labels_used ==1)%>%
   group_by(condition, dataset, testset, dataset_readable)%>%summarise("median_balacc"=mean(balanced_accuracy, na.rm=T))%>%mutate('mean'="Mean performance")
 
 
-gg_gex<- ggplot(data = df_models,aes(x=dataset, y=as.numeric(balanced_accuracy ))) +
+gg_gex<- ggplot(data = df_models,aes(x=dataset_readable, y=as.numeric(balanced_accuracy ))) +
     geom_boxplot(data = df_models, aes(fill=condition))+
     geom_point(data=df_scrambledmedians,
                aes(y=median_balacc,fill=condition, shape=scrambled, group=condition),
@@ -67,5 +67,6 @@ gg_gex<- ggplot(data = df_models,aes(x=dataset, y=as.numeric(balanced_accuracy )
 
 
 
-ggsave(gg_gex,filename = '../plots/gex_performance.pdf', height = 150, width=300, units="mm")
-ggsave(gg_gex,filename = '../plots/gex_performance.jpeg', height = 150, width=300, units="mm")
+ggsave(gg_gex,filename = '../plots/gex_performance.pdf', height = 180, width=300, units="mm")
+ggsave(gg_gex,filename = '../plots/gex_performance.jpeg', height = 180, width=300, units="mm")
+
