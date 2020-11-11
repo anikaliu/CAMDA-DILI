@@ -278,7 +278,10 @@ write.csv(nodes, '../data/enrichment/topnodes_cytoscape.csv', quote = F)
 
 SI_table<-allfeat%>%filter(Uniprot %in%df_sig$Uniprot)%>%inner_join(df_featimp)%>%left_join(df_targetinfo)%>%
   filter(RF_mcnc>quantile(df_sig[,which(colnames(df_sig)=='RF_mcnc')], probs=0.97)|
-           SVM_mcnc>quantile(df_sig[,which(colnames(df_sig)=='SVM_mcnc')], probs=0.97))%>%filter(mcnc<0.05)%>%dplyr::select(Symbol,Name, Protein_Classification, RF_mcnc, SVM_mcnc)
+           SVM_mcnc>quantile(df_sig[,which(colnames(df_sig)=='SVM_mcnc')],probs=0.97))%>%
+  mutate(RF_top=ifelse(RF_mcnc>quantile(df_sig[,which(colnames(df_sig)=='RF_mcnc')], probs=0.97),1,0),
+         SVM_top=ifelse(SVM_mcnc>quantile(df_sig[,which(colnames(df_sig)=='SVM_mcnc')], probs=0.97),1,0))%>%
+  filter(mcnc<0.05)%>%dplyr::select(Symbol,Name, Protein_Classification, RF_mcnc, SVM_mcnc,RF_top,SVM_top)
 write.csv(SI_table, '../data/enrichment/SI_table_genes.csv', quote = F, row.names = F)
 ```
 
