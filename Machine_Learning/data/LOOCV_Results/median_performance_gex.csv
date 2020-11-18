@@ -1,111 +1,111 @@
 "","true_or_y_scrambled_labels_used","condition","dataset","testset","dataset_readable","method","median_balacc"
-"1","1","All cell lines","MCNC","LOCO-CV","DILIrank 
+"1","1","All cell lines","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.535563782899383
-"2","1","All cell lines","MCNC","LOCO-CV","DILIrank 
+"2","1","All cell lines","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.513626480080215
 "3","1","All cell lines","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.518396733693477
 "4","1","All cell lines","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.519636945281404
-"5","1","A375 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"5","1","A375 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.540089285714286
-"6","1","A375 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"6","1","A375 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.503174603174603
 "7","1","A375 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.407672882672882
 "8","1","A375 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.502777777777778
-"9","1","A549 (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"9","1","A549 (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.535714285714286
-"10","1","A549 (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"10","1","A549 (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.436901913875598
 "11","1","A549 (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.439285714285715
 "12","1","A549 (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.366316526610644
-"13","1","ASC (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"13","1","ASC (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.53349358974359
-"14","1","ASC (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"14","1","ASC (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.510903484058061
 "15","1","ASC (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.516666666666666
 "16","1","ASC (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.627272727272727
-"17","1","HA1E (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"17","1","HA1E (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.576098901098901
-"18","1","HA1E (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"18","1","HA1E (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.582623516834043
 "19","1","HA1E (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.558670033670033
 "20","1","HA1E (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.583164983164983
-"21","1","HCC515 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"21","1","HCC515 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.522321428571429
-"22","1","HCC515 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"22","1","HCC515 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.433919022154316
 "23","1","HCC515 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.5
 "24","1","HCC515 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.365476190476191
-"25","1","HEPG2 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"25","1","HEPG2 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.525793650793651
-"26","1","HEPG2 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"26","1","HEPG2 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.503968253968254
 "27","1","HEPG2 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.535984848484849
 "28","1","HEPG2 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.53422619047619
-"29","1","HT29 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"29","1","HT29 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.554714912280702
-"30","1","HT29 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"30","1","HT29 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.5313526272578
 "31","1","HT29 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.489880952380953
 "32","1","HT29 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.617773892773893
-"33","1","MCF7 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"33","1","MCF7 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.54871632996633
-"34","1","MCF7 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"34","1","MCF7 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.546741452991453
 "35","1","MCF7 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.506687069481881
 "36","1","MCF7 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.562612460638776
-"37","1","PC3 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"37","1","PC3 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.530654761904762
-"38","1","PC3 (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"38","1","PC3 (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.54514751552795
 "39","1","PC3 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.530844155844156
 "40","1","PC3 (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.5
-"41","1","PC3 (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"41","1","PC3 (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.566741741741742
-"42","1","PC3 (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"42","1","PC3 (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.533804258804259
 "43","1","PC3 (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.55924317617866
 "44","1","PC3 (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.548611111111111
-"45","1","PHH (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"45","1","PHH (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.521022727272727
-"46","1","PHH (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"46","1","PHH (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.483424908424908
 "47","1","PHH (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.460416666666666
 "48","1","PHH (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.44375
-"49","1","SKB (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"49","1","SKB (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.58459595959596
-"50","1","SKB (24 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"50","1","SKB (24 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.464285714285714
 "51","1","SKB (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.568452380952381
 "52","1","SKB (24 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","SVM",0.3625
-"53","1","VCAP (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"53","1","VCAP (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","RF",0.577054411106135
-"54","1","VCAP (6 h, 10 uM)","MCNC","LOCO-CV","DILIrank 
+"54","1","VCAP (6 h, 10 uM)","MCNC","CV","DILIrank 
  (-vLessConcern)","SVM",0.547771672771673
 "55","1","VCAP (6 h, 10 uM)","MCNC","External Test Set","DILIrank 
  (-vLessConcern)","RF",0.530050505050505

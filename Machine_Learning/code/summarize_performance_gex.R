@@ -12,27 +12,8 @@ cv<-read.csv('~/Downloads/OneDrive_1_11-11-2020/MCNC_cv_scores_GEX_yscr.csv')%>%
                   'method', 'true_or_y_scrambled_labels_used',
                   'train_test_split','cv_split'))%>%
   mutate(cell_line=str_extract(pattern='[\\d\\w]+', cell_line))%>%
-  mutate('testset'='LOCO-CV', 'descriptor'='L1000')
+  mutate('testset'='CV', 'descriptor'='L1000')
 ts<-read.csv('~/Downloads/OneDrive_1_11-11-2020/MCNCts_scores_GEX_yscr.csv')%>%
-  separate(splits, sep='\\.csv\\.', into=c('cell', 'modelinfo'))%>%
-  separate(cell, into=c('cell_line', 'time', 'dose'), sep=', ')%>%
-  separate(modelinfo, sep='\\.',
-           into=c('dataset',
-                  'method', 'true_or_y_scrambled_labels_used',
-                  'train_test_split','cv_split'))%>%
-  mutate(cell_line=str_extract(pattern='[\\d\\w]+', cell_line))%>%
-  mutate('testset'='External Test Set', 'descriptor'='L1000')
-
-cv_mclcnc<-read.csv('~/Downloads/cv_Updated_MCLCNC_scores_GEX_yscr.csv')%>%
-  separate(splits, sep='\\.csv\\.', into=c('cell', 'modelinfo'))%>%
-  separate(cell, into=c('cell_line', 'time', 'dose'), sep=', ')%>%
-  separate(modelinfo, sep='\\.',
-           into=c('dataset',
-                  'method', 'true_or_y_scrambled_labels_used',
-                  'train_test_split','cv_split'))%>%
-  mutate(cell_line=str_extract(pattern='[\\d\\w]+', cell_line))%>%
-  mutate('testset'='LOCO-CV', 'descriptor'='L1000')
-ts_mclcnc<-read.csv('~/Downloads/OneDrive_1_12-11-2020/MCLCNC_ts_scores_GEX_yscr.csv')%>%
   separate(splits, sep='\\.csv\\.', into=c('cell', 'modelinfo'))%>%
   separate(cell, into=c('cell_line', 'time', 'dose'), sep=', ')%>%
   separate(modelinfo, sep='\\.',
@@ -57,7 +38,6 @@ df_performance$dataset_readable[which(df_performance$dataset=='MCNC')]<-'DILIran
 ####Generate figure####
 #Convert to factors and assing orders
 df_performance$dataset_readable<-factor(df_performance$dataset_readable, levels=c('DILIrank \n (-vLessConcern)','DILIrank','DILIrank \n (+SIDER)'))
-df_performance$testset<-factor(df_performance$testset, levels=c('LOCO-CV','External Test Set','FDA Validation Set'))
 #true_or_y_scrambled_labels_used =1 means standard model, everything else is scrambled
 
 df_models<-df_performance%>%
@@ -95,24 +75,3 @@ gg_gex<- ggplot(data = df_models,aes(x=testset, y=as.numeric(balanced_accuracy )
 
 ggsave(gg_gex,filename = '../plots/gex_performance_balanced_accuracy.pdf', height = 130, width=250, units="mm")
 ggsave(gg_gex,filename = '../plots/gex_performance_balanced_accuracy.jpeg',height = 130, width=250, units="mm")
-
-gg_gex<- ggplot(data = df_models,aes(x=condition, y=as.numeric(balanced_accuracy ))) +
-  geom_boxplot(data = df_models, aes(fill=testset))+
-  geom_point(data=df_scrambledmedians,
-             aes(y=median_balacc,fill=testset, shape=scrambled, group=testset),
-             position=position_dodge(width=0.75), size=2)+
-  geom_point(data=df_standardmeans,
-             aes(y=median_balacc,fill=testset,  shape=mean, group=testset),
-             position=position_dodge(width=0.75), size=2)+
-  scale_shape_manual(values=c(23,24))+
- # scale_fill_viridis_d(option='plasma', begin=0.3, end=1)+
-  facet_wrap(~method) + theme_bw()+
-  ylab("Balanced Accuracy")+
-  guides(guide_legend(ncol=2))+
-  theme(text=element_text(size=13), axis.text.x=element_text(angle=60, hjust=1),legend.title = element_blank(), axis.title.x = element_blank())
-
-
-
-ggsave(gg_gex,filename = '../plots/gex_performance.pdf', height = 250, width=300, units="mm")
-ggsave(gg_gex,filename = '../plots/gex_performance.jpeg', height = 250, width=300, units="mm")
-
