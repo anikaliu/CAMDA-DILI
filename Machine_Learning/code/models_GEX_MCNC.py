@@ -400,7 +400,8 @@ for file,file_ext in zip(files,files2):
 
 
         
-#export predictions in zip file
+#export predictions in zip file, code snippet only required to make predictions for FDA test set
+"""
 zf = zipfile.ZipFile('Predictions_GEX.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
@@ -408,7 +409,8 @@ for i,j in zip(predictions,predictions_ident):
     zf.write('Predictions_GEX/'+name+'.txt')
     #os.remove('/ECFP/Predictions_GEX/'+name+'.txt')
 zf.close()
-    
+"""
+
 #export test performances
 df_ts = pd.DataFrame()
 df_ts['splits'] = ts_splits
@@ -420,7 +422,7 @@ df_ts['AU_Prec_Rec_Curve'] = aupr_ts
 df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
-df_ts.to_csv('MCNC_ts_scores_GEX_yscr.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameter/MCNC_ts_scores_GEX_yscr.csv',sep=',',index=False)
 
 
 #export cv performances
@@ -434,5 +436,5 @@ df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
 
-df_cv.to_csv('MCNC_cv_scores_GEX_yscr.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameter/MCNC_cv_scores_GEX_yscr.csv',sep=',',index=False)
 
