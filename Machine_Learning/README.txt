@@ -27,3 +27,7 @@ Purpose: genereate plot for Figure 2a.
 (F)
 Script: similarity_plots.py
 Purpose: generate plot for Figure 2b.
+
+(G)
+Script: models_GEX_MCNC.py
+Purpose: do hyperparameter optimisation and prediction for the internal test sets (including y-scrambled models) for the gene expression models in Supporting Information.
