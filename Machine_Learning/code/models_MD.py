@@ -299,7 +299,7 @@ for dataset in range(3):
                 
                 
 #export predictions in zip file
-zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD_newscaling.zip', mode='w')
+zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
     name = j.replace('.','_')
     i.to_csv(path_or_buf= 'CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD/'+name+'.txt',sep=',',index=False)
@@ -316,7 +316,7 @@ df_ts['AU_Prec_Rec_Curve'] = aupr_ts
 df_ts['ROC_AUC'] = rocauc_ts
 df_ts['MCC'] = mcc_ts
 
-df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/test_scores_MD_newscaling.csv',sep=',',index=False)
+df_ts.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/test_scores_MD.csv',sep=',',index=False)
 
 df_cv = pd.DataFrame()
 df_cv['splits'] = cv_splits
@@ -327,10 +327,10 @@ df_cv['precision'] = pre
 df_cv['AU_Prec_Rec_Curve'] = aupr
 df_cv['ROC_AUC'] = rocauc
 df_cv['MCC'] = mcc
-df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/cv_scores_MD_newscaling.csv',sep=',',index=False)
+df_cv.to_csv('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/cv_scores_MD.csv',sep=',',index=False)
 
 #export best params
-output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/best_parameters_MD_newscaling.pkl','wb')
+output = open('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/best_parameters_MD.pkl','wb')
 
 pickle.dump(best_params, output)
 
