@@ -4,7 +4,7 @@ library(ggplot2)
 library(viridis)
 
 ####Aggregate individual performance files####
-cv<-read.csv('~/Downloads/OneDrive_1_11-11-2020/MCNC_cv_scores_GEX_yscr.csv')%>%
+cv<-read.csv('../data/Model_Results_Parameters/GEX/MCNC_cv_scores_GEX_yscr.csv')%>%
   separate(splits, sep='\\.csv\\.', into=c('cell', 'modelinfo'))%>%
   separate(cell, into=c('cell_line', 'time', 'dose'), sep=', ')%>%
   separate(modelinfo, sep='\\.',
@@ -13,7 +13,7 @@ cv<-read.csv('~/Downloads/OneDrive_1_11-11-2020/MCNC_cv_scores_GEX_yscr.csv')%>%
                   'train_test_split','cv_split'))%>%
   mutate(cell_line=str_extract(pattern='[\\d\\w]+', cell_line))%>%
   mutate('testset'='CV', 'descriptor'='L1000')
-ts<-read.csv('~/Downloads/OneDrive_1_11-11-2020/MCNCts_scores_GEX_yscr.csv')%>%
+ts<-read.csv('../data/Model_Results_Parameters/GEX/MCNC_ts_scores_GEX_yscr.csv')%>%
   separate(splits, sep='\\.csv\\.', into=c('cell', 'modelinfo'))%>%
   separate(cell, into=c('cell_line', 'time', 'dose'), sep=', ')%>%
   separate(modelinfo, sep='\\.',

@@ -1,36 +1,36 @@
-Symbol,Name,Protein_Classification,RF_mcnc,SVM_mcnc
-TBXAS1,Thromboxane-A synthase,Isomerases,0.00070668083314889,0.458202619497774
-PLA2G1B,Phospholipase A2 group 1B,Hydrolases,0.00148410872217537,0.676368194653438
-FABP4,Fatty acid binding protein adipocyte,Transporter,0.000627292812066634,0.308702096095876
-CCNB2,Cyclin-dependent kinase 1/cyclin B,Other,0.000967111672827803,0.358349368423864
-AKR1C3,Aldo-keto-reductase family 1 member C3,Oxidoreductases,0.00440927019931477,0.484520929583724
-ADORA1,Adenosine A1 receptor,GPCR,0.00383516625479664,-0.476120615835935
-CCNB3,Cyclin-dependent kinase 1/cyclin B,Other,0.000762963788188279,0.358349368423864
-CSNK2A2,Casein kinase II alpha (prime),Kinase,0.00285263767693563,0.0107655455440347
-EGFR,Epidermal growth factor receptor erbB1,Kinase,0.00146882259187225,0.557016486446652
-CYP2C9,Cytochrome P450 2C9,Oxidoreductases,0.002409819290486,0.420505102356328
-CLK1,Dual specificty protein kinase CLK1,Kinase,0.00841003704239847,0.0890355103188818
-APBA1,Voltage-gated N-type calcium channel alpha-1B subunit/Amyloid beta A4 precursor protein-binding family A member 1,Transporter,0.00542380798742099,0.0407374828111531
-CXCR2,Interleukin-8 receptor B,GPCR,0.00208560080410441,0.381078503431822
-RARG,Retinoic acid receptor gamma,NHR,0.00153246926705973,0.326039934721661
-NQO2,Quinone reductase 2,Oxidoreductases,0.00299954380336548,0.383980985299456
-FBP1,Fructose-1,6-bisphosphatase,Hydrolases,0.00245664443364952,-0.127702444308073
-EIF2AK4,Eukaryotic translation initiation factor 2-alpha kinase 4,Kinase,0.00248237526027161,0.04232699653268
-AKR1C2,Aldo-keto reductase family 1 member C2,Oxidoreductases,0.00244163663460997,-0.011594490668408
-CYP19A1,Cytochrome P450 19A1,Oxidoreductases,0.00127692607425049,0.453748855267007
-P4HTM,Hypoxia-inducible factor prolyl 4-hydroxylase,Other,0.00285560774955294,0.0113784461659309
-PRNP,Prion protein,Other,0.000819822152261317,0.433417343899072
-RPS6KA6,Ribosomal protein S6 kinase alpha 6,Kinase,0.000531741448971312,0.412598385378415
-NCOA2,Peroxisome proliferator-activated receptor gamma/Nuclear receptor coactivator 2,Other,0.000790183099561183,0.485844125405338
-ESRRA,Estrogen-related receptor alpha,NHR,0.00091063544946224,0.345581899307
-PTGES,Prostaglandin E synthase,Isomerases,0.00329534276264924,0.150247084758944
-CYP1A2,Cytochrome P450 1A2,Oxidoreductases,0.0019334823683095,0.432264182981295
-PRKAB1,AMP-activated protein kinase, beta-1 subunit,Other,0.00340256788469809,0.193113871727687
-MPL,Thrombopoietin receptor,Other,0.00391884035736985,0.235644660598349
-DYRK2,Dual-specificity tyrosine-phosphorylation regulated kinase 2,Kinase,0.00264506899571079,0.211743865998749
-CDC25A,Dual specificity phosphatase Cdc25A,Phosphatase,0.000674226785986917,0.323194583459071
-AR,Androgen Receptor,NHR,0.000627589194319343,0.395002221922817
-AKR1B1,Aldose reductase,Oxidoreductases,0.00447301360404325,0.285453872009523
-MAPK11,MAP kinase p38 beta,Kinase,0.00593126418277858,0.288739347099545
-FGR,Tyrosine-protein kinase FGR,Kinase,0.0029144670986927,0.139348198612534
-NA,Complement C1r,Protease,0.00548078157405694,0.0256220792345349
+Symbol,Name,Protein_Classification,RF_mcnc,SVM_mcnc,RF_top,SVM_top
+TBXAS1,Thromboxane-A synthase,Isomerases,0.00070668083314889,0.458202619497774,0,1
+PLA2G1B,Phospholipase A2 group 1B,Hydrolases,0.00148410872217537,0.676368194653438,0,1
+FABP4,Fatty acid binding protein adipocyte,Transporter,0.000627292812066634,0.308702096095876,0,1
+CCNB2,Cyclin-dependent kinase 1/cyclin B,Other,0.000967111672827803,0.358349368423864,0,1
+AKR1C3,Aldo-keto-reductase family 1 member C3,Oxidoreductases,0.00440927019931477,0.484520929583724,1,1
+ADORA1,Adenosine A1 receptor,GPCR,0.00383516625479664,-0.476120615835935,1,0
+CCNB3,Cyclin-dependent kinase 1/cyclin B,Other,0.000762963788188279,0.358349368423864,0,1
+CSNK2A2,Casein kinase II alpha (prime),Kinase,0.00285263767693563,0.0107655455440347,1,0
+EGFR,Epidermal growth factor receptor erbB1,Kinase,0.00146882259187225,0.557016486446652,0,1
+CYP2C9,Cytochrome P450 2C9,Oxidoreductases,0.002409819290486,0.420505102356328,1,1
+CLK1,Dual specificty protein kinase CLK1,Kinase,0.00841003704239847,0.0890355103188818,1,0
+APBA1,Voltage-gated N-type calcium channel alpha-1B subunit/Amyloid beta A4 precursor protein-binding family A member 1,Transporter,0.00542380798742099,0.0407374828111531,1,0
+CXCR2,Interleukin-8 receptor B,GPCR,0.00208560080410441,0.381078503431822,0,1
+RARG,Retinoic acid receptor gamma,NHR,0.00153246926705973,0.326039934721661,0,1
+NQO2,Quinone reductase 2,Oxidoreductases,0.00299954380336548,0.383980985299456,1,1
+FBP1,Fructose-1,6-bisphosphatase,Hydrolases,0.00245664443364952,-0.127702444308073,1,0
+EIF2AK4,Eukaryotic translation initiation factor 2-alpha kinase 4,Kinase,0.00248237526027161,0.04232699653268,1,0
+AKR1C2,Aldo-keto reductase family 1 member C2,Oxidoreductases,0.00244163663460997,-0.011594490668408,1,0
+CYP19A1,Cytochrome P450 19A1,Oxidoreductases,0.00127692607425049,0.453748855267007,0,1
+P4HTM,Hypoxia-inducible factor prolyl 4-hydroxylase,Other,0.00285560774955294,0.0113784461659309,1,0
+PRNP,Prion protein,Other,0.000819822152261317,0.433417343899072,0,1
+RPS6KA6,Ribosomal protein S6 kinase alpha 6,Kinase,0.000531741448971312,0.412598385378415,0,1
+NCOA2,Peroxisome proliferator-activated receptor gamma/Nuclear receptor coactivator 2,Other,0.000790183099561183,0.485844125405338,0,1
+ESRRA,Estrogen-related receptor alpha,NHR,0.00091063544946224,0.345581899307,0,1
+PTGES,Prostaglandin E synthase,Isomerases,0.00329534276264924,0.150247084758944,1,0
+CYP1A2,Cytochrome P450 1A2,Oxidoreductases,0.0019334823683095,0.432264182981295,0,1
+PRKAB1,AMP-activated protein kinase, beta-1 subunit,Other,0.00340256788469809,0.193113871727687,1,0
+MPL,Thrombopoietin receptor,Other,0.00391884035736985,0.235644660598349,1,0
+DYRK2,Dual-specificity tyrosine-phosphorylation regulated kinase 2,Kinase,0.00264506899571079,0.211743865998749,1,0
+CDC25A,Dual specificity phosphatase Cdc25A,Phosphatase,0.000674226785986917,0.323194583459071,0,1
+AR,Androgen Receptor,NHR,0.000627589194319343,0.395002221922817,0,1
+AKR1B1,Aldose reductase,Oxidoreductases,0.00447301360404325,0.285453872009523,1,0
+MAPK11,MAP kinase p38 beta,Kinase,0.00593126418277858,0.288739347099545,1,0
+FGR,Tyrosine-protein kinase FGR,Kinase,0.0029144670986927,0.139348198612534,1,0
+NA,Complement C1r,Protease,0.00548078157405694,0.0256220792345349,1,0

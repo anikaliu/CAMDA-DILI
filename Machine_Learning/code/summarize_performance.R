@@ -19,11 +19,11 @@ cv_MD<-read.csv('../data/Model_Results_Parameters/MD_newscaling/cv_scores_MD_new
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='LOCO-CV', 'descriptor'='MD')
-ts_MD<-read.csv('../data/Model_Results_Parameters/MD_newscaling/test_scores_MD_newscaling.csv')%>%
+ts_MD<-read.csv('../data/Model_Results_Parameters/MD/test_scores_MD.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='External Test Set', 'descriptor'='MD')
-ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD_newscaling/ambiguous_results.csv')%>%
+ex_MD<-read.csv('../data/FDA_Validation_Set_Results/Predictions_MD/ambiguous_results.csv')%>%
   separate(splits, sep='\\.',
            into=c('dataset', 'method', 'true_or_y_scrambled_labels_used','train_test_split','cv_split'))%>%
   mutate('testset'='FDA Validation Set', 'descriptor'='MD')
