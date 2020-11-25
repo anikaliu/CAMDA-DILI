@@ -22,17 +22,20 @@ from sklearn.metrics import auc
 from sklearn.metrics import precision_recall_curve
 from sklearn.model_selection import GroupKFold
 from sklearn.model_selection import StratifiedKFold
-from sklearn.preprocessing import scale
+#from sklearn.preprocessing import scale
+from sklearn.preprocessing import StandardScaler
 import pickle
 import os
 import zipfile
-
 
 #import data
 df_training = pd.read_csv('CAMDA-DILI/Data_Processing/Molecular_Descriptors/data/mol_descriptors_training.csv', delimiter=',',index_col=0)
 df_compounds = pd.read_csv('CAMDA-DILI/Data_Processing/Structure_Standardization_And_Clustering/data/standardized_compounds_excl_ambiguous_cluster.csv', delimiter=',')
 
-X_all = scale(df_training.values)
+#X_all = scale(df_training.values)
+X_all = df_training.values
+
+scaler = StandardScaler()
 
         
 # labels (0,1) in Y_all
@@ -69,7 +72,8 @@ cluster_mclcnc = np.concatenate((cluster[mc],cluster[lc],cluster[nc]))
 #data for ambiguous, fp
 df_ambis = pd.read_csv('CAMDA-DILI/Data_Processing/Molecular_Descriptors/data/mol_descriptors_ambiguous.csv',delimiter=',',index_col=0)
 
-X_ambis = scale(df_ambis.values)
+#X_ambis = scale(df_ambis.values)
+X_ambis = df_ambis.values
 
 df_pred = pd.read_csv('CAMDA-DILI/Data_Processing/Challenge_Data/myname_predictions_no1_TEMPLATE.txt', delimiter=',')
 ambis = df_pred['Compound.Name'].tolist()
@@ -81,7 +85,7 @@ def rf_param_selection(X, y, cvsplit):
     max_dep = [10,15,None]
     param_grid = {'n_estimators': est, 'min_samples_leaf' : min_sam, 'max_depth' : max_dep}
     clf = RandomForestClassifier(random_state = 2,class_weight = 'balanced_subsample', bootstrap=True)
-    grid_search = GridSearchCV(clf, param_grid, cv=cvsplit, scoring='balanced_accuracy', n_jobs=15)
+    grid_search = GridSearchCV(clf, param_grid, cv=cvsplit, scoring='balanced_accuracy', n_jobs=3)
     grid_search.fit(X, y)
     grid_search.best_params_
     return(grid_search.best_params_)
@@ -90,7 +94,7 @@ def svc_param_selection(X, y, cvsplit):
     Cs = [0.05,0.1,0.2,0.3,0.4,0.5, 1]
     param_grid = {'C': Cs}
     clf = SVC(class_weight='balanced', random_state=22, kernel='linear')
-    grid_search = GridSearchCV(clf, param_grid, cv=cvsplit, scoring='balanced_accuracy', n_jobs=15)
+    grid_search = GridSearchCV(clf, param_grid, cv=cvsplit, scoring='balanced_accuracy', n_jobs=3)
     grid_search.fit(X, y)
     grid_search.best_params_
     return(grid_search.best_params_)
@@ -171,6 +175,7 @@ for dataset in range(3):
         np.random.set_state(state2)        
         for j,(train,test) in enumerate(skf.split(X_in,Y)):
             
+            
             #size of test set: 10%
             test_idx = test
             train_idx = train
@@ -183,27 +188,30 @@ for dataset in range(3):
                 cvdict[dict_dataset[dataset][:-1]]['test'] = []
                 cvdict[dict_dataset[dataset][:-1]]['train'] = []
             
-            
+            #replace all X_in[train_idx] with scaled X_train and X_in[test_idx] with X_test
+            scaler.fit(X_in[train_idx])
+            X_train = scaler.transform(X_in[train_idx])
+            X_test = scaler.transform(X_in[test_idx])
             
             #set random state for gkf
             np.random.set_state(state)
-            gkf = GroupKFold(n_splits=5).split(X_in[train_idx],Y[train_idx],cluster_in[train_idx])    
+            gkf = GroupKFold(n_splits=5).split(X_train,Y[train_idx],cluster_in[train_idx])    
             for tr,te in gkf:
                 cvdict[dict_dataset[dataset][:-1]]['train'].append(tr)
                 cvdict[dict_dataset[dataset][:-1]]['test'].append(te)
             
             #set random state for gkf
             np.random.set_state(state)
-            gkf = GroupKFold(n_splits=5).split(X_in[train_idx],Y[train_idx],cluster_in[train_idx])
+            gkf = GroupKFold(n_splits=5).split(X_train,Y[train_idx],cluster_in[train_idx])
     
       
-            best_params[dict_dataset[dataset]+'RF.' + str(i+1)+'.'+str(j+1)] = rf_param_selection(X_in[train_idx],Y[train_idx],gkf)
+            best_params[dict_dataset[dataset]+'RF.' + str(i+1)+'.'+str(j+1)] = rf_param_selection(X_train,Y[train_idx],gkf)
     
             np.random.set_state(state)
-            gkf = GroupKFold(n_splits=5).split(X_in[train_idx],Y[train_idx],cluster_in[train_idx])
+            gkf = GroupKFold(n_splits=5).split(X_train,Y[train_idx],cluster_in[train_idx])
     
     
-            best_params[dict_dataset[dataset]+'SVM.' + str(i+1)+'.'+str(j+1)] = svc_param_selection(X_in[train_idx],Y[train_idx],gkf)
+            best_params[dict_dataset[dataset]+'SVM.' + str(i+1)+'.'+str(j+1)] = svc_param_selection(X_train,Y[train_idx],gkf)
     
   
     
@@ -215,59 +223,60 @@ for dataset in range(3):
                probability=True)
         
             np.random.set_state(state)
-            gkf = GroupKFold(n_splits=5).split(X_in[train_idx],Y[train_idx],cluster_in[train_idx])
+            gkf = GroupKFold(n_splits=5).split(X_train,Y[train_idx],cluster_in[train_idx])
             for k, (train,test) in enumerate(gkf):
-                clf.fit(X_in[train_idx][train],Y[train_idx][train])
-                acc.append(accuracy_score(Y[train_idx][test], clf.predict(X_in[train_idx][test])))
-                bal_acc.append(balanced_accuracy_score(Y[train_idx][test], clf.predict(X_in[train_idx][test])))
-                rec.append(recall_score(Y[train_idx][test], clf.predict(X_in[train_idx][test]), pos_label=1))
-                pre.append(precision_score(Y[train_idx][test], clf.predict(X_in[train_idx][test]), pos_label=1))
-                rocauc.append(roc_auc_score(Y[train_idx][test], clf.predict_proba(X_in[train_idx][test])[:,1]))
-                precision,recall,_ = precision_recall_curve(Y[train_idx][test], clf.predict_proba(X_in[train_idx][test])[:,1])
+                clf.fit(X_train[train],Y[train_idx][train])
+                acc.append(accuracy_score(Y[train_idx][test], clf.predict(X_train[test])))
+                bal_acc.append(balanced_accuracy_score(Y[train_idx][test], clf.predict(X_train[test])))
+                rec.append(recall_score(Y[train_idx][test], clf.predict(X_train[test]), pos_label=1))
+                pre.append(precision_score(Y[train_idx][test], clf.predict(X_train[test]), pos_label=1))
+                rocauc.append(roc_auc_score(Y[train_idx][test], clf.predict_proba(X_train[test])[:,1]))
+                precision,recall,_ = precision_recall_curve(Y[train_idx][test], clf.predict_proba(X_train[test])[:,1])
                 aupr.append(auc(recall,precision))
-                mcc.append(matthews_corrcoef(Y[train_idx][test], clf.predict(X_in[train_idx][test])))
+                mcc.append(matthews_corrcoef(Y[train_idx][test], clf.predict(X_train[test])))
                 cv_splits.append(dict_dataset[dataset]+'RF.'+str(i+1)+'.'+str(j+1)+'.'+str(k+1))
             
             
-                clf2.fit(X_in[train_idx][train],Y[train_idx][train])
-                acc.append(accuracy_score(Y[train_idx][test], clf2.predict(X_in[train_idx][test])))
-                bal_acc.append(balanced_accuracy_score(Y[train_idx][test], clf2.predict(X_in[train_idx][test])))
-                rec.append(recall_score(Y[train_idx][test], clf2.predict(X_in[train_idx][test]), pos_label=1))
-                pre.append(precision_score(Y[train_idx][test], clf2.predict(X_in[train_idx][test]), pos_label=1))
-                rocauc.append(roc_auc_score(Y[train_idx][test], clf2.predict_proba(X_in[train_idx][test])[:,1]))
-                precision,recall,_ = precision_recall_curve(Y[train_idx][test], clf2.predict_proba(X_in[train_idx][test])[:,1])
+                clf2.fit(X_train[train],Y[train_idx][train])
+                acc.append(accuracy_score(Y[train_idx][test], clf2.predict(X_train[test])))
+                bal_acc.append(balanced_accuracy_score(Y[train_idx][test], clf2.predict(X_train[test])))
+                rec.append(recall_score(Y[train_idx][test], clf2.predict(X_train[test]), pos_label=1))
+                pre.append(precision_score(Y[train_idx][test], clf2.predict(X_train[test]), pos_label=1))
+                rocauc.append(roc_auc_score(Y[train_idx][test], clf2.predict_proba(X_train[test])[:,1]))
+                precision,recall,_ = precision_recall_curve(Y[train_idx][test], clf2.predict_proba(X_train[test])[:,1])
                 aupr.append(auc(recall,precision))
-                mcc.append(matthews_corrcoef(Y[train_idx][test], clf2.predict(X_in[train_idx][test])))
+                mcc.append(matthews_corrcoef(Y[train_idx][test], clf2.predict(X_train[test])))
                 cv_splits.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1)+'.'+str(k+1))
     
             #evaluate on test set
-            clf.fit(X_in[train_idx],Y[train_idx])
-            acc_ts.append(accuracy_score(Y[test_idx], clf.predict(X_in[test_idx])))
-            bal_acc_ts.append(balanced_accuracy_score(Y[test_idx], clf.predict(X_in[test_idx])))
-            rec_ts.append(recall_score(Y[test_idx], clf.predict(X_in[test_idx]), pos_label=1))
-            pre_ts.append(precision_score(Y[test_idx], clf.predict(X_in[test_idx]), pos_label=1))
-            rocauc_ts.append(roc_auc_score(Y[test_idx], clf.predict_proba(X_in[test_idx])[:,1]))
-            precision,recall,_ = precision_recall_curve(Y[test_idx], clf.predict_proba(X_in[test_idx])[:,1])
+            clf.fit(X_train,Y[train_idx])
+            acc_ts.append(accuracy_score(Y[test_idx], clf.predict(X_test)))
+            bal_acc_ts.append(balanced_accuracy_score(Y[test_idx], clf.predict(X_test)))
+            rec_ts.append(recall_score(Y[test_idx], clf.predict(X_test), pos_label=1))
+            pre_ts.append(precision_score(Y[test_idx], clf.predict(X_test), pos_label=1))
+            rocauc_ts.append(roc_auc_score(Y[test_idx], clf.predict_proba(X_test)[:,1]))
+            precision,recall,_ = precision_recall_curve(Y[test_idx], clf.predict_proba(X_test)[:,1])
             aupr_ts.append(auc(recall,precision))
-            mcc_ts.append(matthews_corrcoef(Y[test_idx], clf.predict(X_in[test_idx])))
+            mcc_ts.append(matthews_corrcoef(Y[test_idx], clf.predict(X_test)))
             ts_splits.append(dict_dataset[dataset]+'RF.'+str(i+1)+'.'+str(j+1))
             
-            clf2.fit(X_in[train_idx],Y[train_idx])
-            acc_ts.append(accuracy_score(Y[test_idx], clf2.predict(X_in[test_idx])))
-            bal_acc_ts.append(balanced_accuracy_score(Y[test_idx], clf2.predict(X_in[test_idx])))
-            rec_ts.append(recall_score(Y[test_idx], clf2.predict(X_in[test_idx]), pos_label=1))
-            pre_ts.append(precision_score(Y[test_idx], clf2.predict(X_in[test_idx]), pos_label=1))
-            rocauc_ts.append(roc_auc_score(Y[test_idx], clf2.predict_proba(X_in[test_idx])[:,1]))
-            precision,recall,_ = precision_recall_curve(Y[test_idx], clf2.predict_proba(X_in[test_idx])[:,1])
+            clf2.fit(X_train,Y[train_idx])
+            acc_ts.append(accuracy_score(Y[test_idx], clf2.predict(X_test)))
+            bal_acc_ts.append(balanced_accuracy_score(Y[test_idx], clf2.predict(X_test)))
+            rec_ts.append(recall_score(Y[test_idx], clf2.predict(X_test), pos_label=1))
+            pre_ts.append(precision_score(Y[test_idx], clf2.predict(X_test), pos_label=1))
+            rocauc_ts.append(roc_auc_score(Y[test_idx], clf2.predict_proba(X_test)[:,1]))
+            precision,recall,_ = precision_recall_curve(Y[test_idx], clf2.predict_proba(X_test)[:,1])
             aupr_ts.append(auc(recall,precision))
-            mcc_ts.append(matthews_corrcoef(Y[test_idx], clf2.predict(X_in[test_idx])))
+            mcc_ts.append(matthews_corrcoef(Y[test_idx], clf2.predict(X_test)))
             ts_splits.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
 
-        
+            #concat X_train, X_test to get scaled featture matrix for the whole set        
+            X_scaled = np.concatenate([X_train,X_test])
             #make predictions for each set with the corresponding parameters
             if i==0:
-                clf.fit(X_in,Y)
-                pred = clf.predict(X_ambis)
+                clf.fit(X_scaled,Y)
+                pred = clf.predict(scaler.transform(X_ambis))
                 df_curr_pred = df_pred.copy()
                 for idx,p in enumerate(pred):
                     if p==1:
@@ -277,8 +286,8 @@ for dataset in range(3):
                 predictions.append(df_curr_pred)
                 predictions_ident.append(dict_dataset[dataset]+'RF.'+str(i+1)+'.'+str(j+1))
                 
-                clf2.fit(X_in,Y)
-                pred = clf2.predict(X_ambis)
+                clf2.fit(X_scaled,Y)
+                pred = clf2.predict(scaler.transform(X_ambis))
                 df_curr_pred = df_pred.copy()
                 for idx,p in enumerate(pred):
                     if p==1:
@@ -287,7 +296,8 @@ for dataset in range(3):
                         df_curr_pred.iloc[idx,1] = 'NoDILI'
                 predictions.append(df_curr_pred)
                 predictions_ident.append(dict_dataset[dataset]+'SVM.'+str(i+1)+'.'+str(j+1))
-        
+                
+                
 #export predictions in zip file
 zf = zipfile.ZipFile('CAMDA-DILI/Machine_Learning/data/Model_Results_Parameters/MD/Predictions_MD.zip', mode='w')
 for i,j in zip(predictions,predictions_ident):
